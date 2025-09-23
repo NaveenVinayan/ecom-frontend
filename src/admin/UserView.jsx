@@ -11,7 +11,7 @@ const UserView = () => {
     const fetchUsers = async () => {
       setPrdLoading(true)
       try {
-        const response = await axios.get('http://localhost:5000/api/user',
+        const response = await axios.get('https://ecom-api.vercel.app/api/user',
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`
@@ -54,7 +54,7 @@ const UserView = () => {
         if (window.confirm("Are you sure you want to delete this product?")) {
 
             try {
-                const response = await axios.delete(`http://localhost:5000/api/user/${id}`, {
+                const response = await axios.delete(`https://ecom-api.vercel.app/api/user/${id}`, {
                     headers: {
                         "Authorization": `Bearer ${localStorage.getItem('token')}`
                     }

@@ -14,7 +14,7 @@ const ProductView = () => {
         const fetchProducts = async () => {
             setPrdLoading(true)
             try {
-                const response = await axios.get('http://localhost:5000/api/product',
+                const response = await axios.get('https://ecom-api.vercel.app/api/product',
                     {
                         headers: {
                             Authorization: `Bearer ${localStorage.getItem("token")}`
@@ -56,7 +56,7 @@ const ProductView = () => {
         if (window.confirm("Are you sure you want to delete this product?")) {
 
             try {
-                const response = await axios.delete(`http://localhost:5000/api/product/${id}`, {
+                const response = await axios.delete(`https://ecom-api.vercel.app/api/product/${id}`, {
                     headers: {
                         "Authorization": `Bearer ${localStorage.getItem('token')}`
                     }
