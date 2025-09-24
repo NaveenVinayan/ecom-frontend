@@ -1,12 +1,12 @@
 import React from 'react'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import axios from 'axios' 
+import axios from 'axios'
 
 const AddProduct = () => {
 
     const [formData, setFormData] = useState({})
-    const [loading ,setLoading ]= useState(false)
+    const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
 
 
@@ -26,9 +26,9 @@ const AddProduct = () => {
         Object.keys(formData).forEach((key) => {
             formDataobj.append(key, formData[key])
         })
-        setLoading(true) 
+        setLoading(true)
         try {
-                       
+
             const response = await axios.post('https://ecom-api-2xbg.onrender.com/api/product/add', formDataobj, {
                 headers: {
                     "Authorization": `Bearer ${localStorage.getItem('token')}`
@@ -37,7 +37,7 @@ const AddProduct = () => {
             if (response.data.success) {
                 navigate("/admin-dashboard")
             }
-            
+
         } catch (error) {
             if (error.response && !error.response.data.success) {
                 alert(error.response.data.error)
@@ -48,25 +48,27 @@ const AddProduct = () => {
     }
 
     return (
-         <> {loading ? <div className="flex items-center justify-center min-h-screen">
-            <div role="status">
-                <svg
-                    aria-hidden="true"
-                    className="w-12 h-12 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
-                    viewBox="0 0 100 101"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                >
-                    <path
-                        d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 
+        <>
+            {loading ? (
+                <div className="flex items-center justify-center min-h-screen">
+                    <div role="status">
+                        <svg
+                            aria-hidden="true"
+                            className="w-12 h-12 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+                            viewBox="0 0 100 101"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path
+                                d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 
         0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 
         100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 
         91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 
         50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
-                        fill="currentColor"
-                    />
-                    <path
-                        d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 
+                                fill="currentColor"
+                            />
+                            <path
+                                d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 
         97.0079 33.5539C95.2932 28.8227 92.871 
         24.3692 89.8167 20.348C85.8452 15.1192 
         80.8826 10.7238 75.2124 7.41289C69.5422 
@@ -81,103 +83,104 @@ const AddProduct = () => {
         25.841C84.9175 28.9121 86.7997 32.2913 
         88.1811 35.8758C89.083 38.2158 91.5421 
         39.6781 93.9676 39.0409Z"
-                        fill="currentFill"
-                    />
-                </svg>
-                <span className="sr-only">Loading...</span>
-            </div>
-        </div> : (
-             <div className="max-w-3xl mx-auto mt-10 bg-white p-8 shadow-md rounded-md">
-            <div>
-            <h2 className="text-2xl font-bold mb-6 text-gray-800 border-b pb-3">
-                Add Product
-            </h2>
-            
-            </div>
-
-            <form className="space-y-6" onSubmit={handleSubmit}>
-                {/* Product Name */}
-                <div>
-                    <label className="block text-sm font-medium text-gray-700">
-                        Product Name
-                    </label>
-                    <input
-                        type="text"
-                        name="name"
-                        onChange={handleChange}
-
-                        className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:border-yellow-500 focus:ring-yellow-500"
-                        required
-                    />
+                                fill="currentFill"
+                            />
+                        </svg>
+                        <span className="sr-only">Loading...</span>
+                    </div>
                 </div>
+            ) : (
+                <div className="max-w-3xl mx-auto mt-10 bg-white p-8 shadow-md rounded-md">
+                    <div>
+                        <h2 className="text-2xl font-bold mb-6 text-gray-800 border-b pb-3">
+                            Add Product
+                        </h2>
 
-                {/* Description */}
-                <div>
-                    <label className="block text-sm font-medium text-gray-700">
-                        Product Description
-                    </label>
-                    <textarea
-                        name="description"
-                        rows="3"
-                        onChange={handleChange}
+                    </div>
 
-                        className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:border-yellow-500 focus:ring-yellow-500"
-                        required
-                    />
+                    <form className="space-y-6" onSubmit={handleSubmit}>
+                        {/* Product Name */}
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700">
+                                Product Name
+                            </label>
+                            <input
+                                type="text"
+                                name="name"
+                                onChange={handleChange}
+
+                                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:border-yellow-500 focus:ring-yellow-500"
+                                required
+                            />
+                        </div>
+
+                        {/* Description */}
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700">
+                                Product Description
+                            </label>
+                            <textarea
+                                name="description"
+                                rows="3"
+                                onChange={handleChange}
+
+                                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:border-yellow-500 focus:ring-yellow-500"
+                                required
+                            />
+                        </div>
+
+                        {/* Price */}
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700">
+                                Product Price (₹)
+                            </label>
+                            <input
+                                type="number"
+                                name="price"
+                                onChange={handleChange}
+
+                                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:border-yellow-500 focus:ring-yellow-500"
+                                required
+                            />
+                        </div>
+
+                        {/* Image Upload */}
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700">
+                                Upload Product Image
+                            </label>
+                            <input
+                                type="file"
+                                name="image"
+                                onChange={handleChange}
+                                accept='image/*'
+                                placeholder='Please upload Image'
+                                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:border-yellow-500 focus:ring-yellow-500"
+                                required
+                            />
+                        </div>
+
+                        {/* Buttons */}
+                        <div className="flex gap-4">
+                            <button
+                                type="submit"
+                                className="px-6 py-2 bg-yellow-500 text-white font-medium rounded-md hover:bg-yellow-600"
+                            >
+                                Confirm
+                            </button>
+                            <button
+                                type="button"
+                                className="px-6 py-2 bg-gray-300 text-gray-800 rounded-md hover:bg-gray-400"
+                                onClick={() => navigate('/admin-dashboard')}
+                            >
+                                Cancel
+                            </button>
+                        </div>
+                    </form>
                 </div>
-
-                {/* Price */}
-                <div>
-                    <label className="block text-sm font-medium text-gray-700">
-                        Product Price (₹)
-                    </label>
-                    <input
-                        type="number"
-                        name="price"
-                        onChange={handleChange}
-
-                        className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:border-yellow-500 focus:ring-yellow-500"
-                        required
-                    />
-                </div>
-
-                {/* Image Upload */}
-                <div>
-                    <label className="block text-sm font-medium text-gray-700">
-                        Upload Product Image
-                    </label>
-                    <input
-                        type="file"
-                        name="image" 
-                        onChange={handleChange} 
-                        accept='image/*'
-                        placeholder='Please upload Image'
-                        className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:border-yellow-500 focus:ring-yellow-500"
-                        required
-                    />
-                </div>
-
-                {/* Buttons */}
-                <div className="flex gap-4">
-                    <button
-                        type="submit"
-                        className="px-6 py-2 bg-yellow-500 text-white font-medium rounded-md hover:bg-yellow-600"
-                    >
-                        Confirm
-                    </button>
-                    <button
-                        type="button"
-                        className="px-6 py-2 bg-gray-300 text-gray-800 rounded-md hover:bg-gray-400"
-                        onClick={() => navigate('/admin-dashboard')}
-                    >
-                        Cancel
-                    </button>
-                </div>
-            </form>
-        </div>
-        )}
+            )}
         </>
-       
+
     )
 }
 
