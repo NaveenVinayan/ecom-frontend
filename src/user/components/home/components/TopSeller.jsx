@@ -93,11 +93,10 @@ const TopSeller = () => {
                                 </div>
 
                                 {/* Image */}
-                                <div className="mb-4 overflow-hidden">
+                                <div className="mb-4 overflow-hidden w-full h-64 sm:h-72 md:h-80 lg:h-96">
                                     <img
                                         onClick={() => navigate(`/user-home/products-list/detail/${item._id}`)}
-                                        className="w-full duration-300 ease-in-out group-hover:scale-110"
-                                        src={item.productImage}
+                                        className="w-full h-full object-cover duration-300 ease-in-out group-hover:scale-110 cursor-pointer" src={item.productImage}
                                         alt={item.name}
                                     />
                                 </div>

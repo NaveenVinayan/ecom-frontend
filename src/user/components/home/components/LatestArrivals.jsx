@@ -109,8 +109,7 @@ const LatestArrivals = () => {
                             <div className=" overflow-hidden duration-300 ease-in-out hover:scale-95">
                                 <img
                                     onClick={() => navigate(`/user-home/products-list/detail/${prd._id}`)}
-                                    className="w-full duration-300 ease-in-out hover:scale-115"
-                                    src={prd.productImage}
+                                    className="w-64 h-64 sm:w-72 sm:h-72 md:w-80 md:h-80 lg:w-96 lg:h-96 object-cover duration-300 ease-in-out hover:scale-110 cursor-pointer" src={prd.productImage}
                                     alt={prd.name}
                                 />
                             </div>
