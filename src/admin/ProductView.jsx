@@ -29,7 +29,7 @@ const ProductView = () => {
                             _id: prd._id,
                             sno: sno++,
                             name: prd.name,
-                            productImage: `http://localhost:5000/${prd.productImage}`,
+                            productImage: `https://ecom-api-2xbg.onrender.com/${prd.productImage}`,
                             description: prd.description,
                             price: prd.price
 

@@ -41,7 +41,7 @@ const ProductDetail = () => {
         {/* Product Image Section */}
         <div className="flex flex-col items-center">
           <img
-            src={`http://localhost:5000/${product.productImage}`}
+            src={`https://ecom-api-2xbg.onrender.com/${product.productImage}`}
             alt=""
             className="rounded-lg shadow-lg w-full max-w-md object-cover"
           />

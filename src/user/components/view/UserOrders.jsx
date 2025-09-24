@@ -47,7 +47,7 @@ const Userorders = () => {
               _id: ord._id,
               productId: ord.productId?._id,
               productName: ord.productId?.fullName,
-              productImage: `http://localhost:5000/${ord.productId?.productImage}`,
+              productImage: `https://ecom-api-2xbg.onrender.com/${ord.productId?.productImage}`,
               description: ord.productId?.description,
               price: ord.productId?.price,
               status: ord.status,

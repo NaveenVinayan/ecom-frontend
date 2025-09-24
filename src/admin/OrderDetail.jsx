@@ -81,7 +81,7 @@ const OrderDetail = () => {
                 <h3 className="text-lg font-semibold mb-3">🛍 Product Details</h3>
                 <div className="flex items-center gap-4">
                     <img
-                        src={`http://localhost:5000/${order.productId.productImage}`}
+                        src={`https://ecom-api-2xbg.onrender.com/${order.productId.productImage}`}
                         alt={order.productId.name}
                         className="w-24 h-24 object-cover rounded-md border"
                     />

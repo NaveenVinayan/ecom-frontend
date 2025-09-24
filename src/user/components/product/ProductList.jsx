@@ -34,7 +34,7 @@ const ProductList = () => {
             {
               _id: prd._id,
               name: prd.name,
-              productImage: `http://localhost:5000/${prd.productImage}`,
+              productImage: `https://ecom-api-2xbg.onrender.com/${prd.productImage}`,
               description: prd.description,
               price: prd.price
 
