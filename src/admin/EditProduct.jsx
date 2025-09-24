@@ -18,7 +18,7 @@ const EditProduct = () => {
         const fetchProducts = async () => {
 
             try {
-                const response = await axios.get(`https://ecom-api.vercel.app/api/product/${id}`,
+                const response = await axios.get(`https://ecom-api-2xbg.onrender.com/api/product/${id}`,
                     {
                         headers: {
                             Authorization: `Bearer ${localStorage.getItem("token")}`
@@ -58,7 +58,7 @@ const EditProduct = () => {
         e.preventDefault()
         
             try {
-                const response = await axios.put(`https://ecom-api.vercel.app/api/product/${id}`, product, {
+                const response = await axios.put(`https://ecom-api-2xbg.onrender.com/api/product/${id}`, product, {
                     headers: {
                         "Authorization": `Bearer ${localStorage.getItem('token')}`
                     }

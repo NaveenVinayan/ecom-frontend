@@ -12,7 +12,7 @@ const OrderView = () => {
     const fetchOrders = async () => {
       setPrdLoading(true)
       try {
-        const response = await axios.get('https://ecom-api.vercel.app/api/order',
+        const response = await axios.get('https://ecom-api-2xbg.onrender.com/api/order',
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`

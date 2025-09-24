@@ -27,7 +27,7 @@ const Checkout = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(`https://ecom-api.vercel.app/api/order/${id}/${user._id}`, address, {
+      const response = await axios.post(`https://ecom-api-2xbg.onrender.com/api/order/${id}/${user._id}`, address, {
         headers: {
           "Authorization": `Bearer ${localStorage.getItem('token')}`
         }

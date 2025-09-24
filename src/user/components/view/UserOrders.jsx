@@ -32,7 +32,7 @@ const Userorders = () => {
       setPrdLoading(true)
 
       try {
-        const response = await axios.get(`https://ecom-api.vercel.app/api/order/orders/${user._id}`,
+        const response = await axios.get(`https://ecom-api-2xbg.onrender.com/api/order/orders/${user._id}`,
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`
@@ -80,7 +80,7 @@ const Userorders = () => {
     if (window.confirm("Are you sure you want to cancel this product?")) {
 
       try {
-        const response = await axios.put(`https://ecom-api.vercel.app/api/order/cancel/${_id}`, {}, {
+        const response = await axios.put(`https://ecom-api-2xbg.onrender.com/api/order/cancel/${_id}`, {}, {
           headers: {
             "Authorization": `Bearer ${localStorage.getItem('token')}`
           }

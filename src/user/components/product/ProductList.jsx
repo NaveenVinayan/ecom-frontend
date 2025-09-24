@@ -20,7 +20,7 @@ const ProductList = () => {
     const fetchProducts = async () => {
       setPrdLoading(true)
       try {
-        const response = await axios.get('https://ecom-api.vercel.app/api/product',
+        const response = await axios.get('https://ecom-api-2xbg.onrender.com/api/product',
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`

@@ -27,7 +27,7 @@ const AddProduct = () => {
             formDataobj.append(key, formData[key])
         })
         try {
-            const response = await axios.post('https://ecom-api.vercel.app/api/product/add', formDataobj, {
+            const response = await axios.post('https://ecom-api-2xbg.onrender.com/api/product/add', formDataobj, {
                 headers: {
                     "Authorization": `Bearer ${localStorage.getItem('token')}`
                 }

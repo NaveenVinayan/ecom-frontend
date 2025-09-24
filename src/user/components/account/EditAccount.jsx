@@ -22,7 +22,7 @@ const AccountDetails = () => {
         const fetchUsers = async () => {
 
             try {
-                const response = await axios.get(`https://ecom-api.vercel.app/api/user/${user._id}`,
+                const response = await axios.get(`https://ecom-api-2xbg.onrender.com/api/user/${user._id}`,
                     {
                         headers: {
                             Authorization: `Bearer ${localStorage.getItem("token")}`
@@ -61,7 +61,7 @@ const AccountDetails = () => {
         e.preventDefault()
 
         try {
-            const response = await axios.put(`https://ecom-api.vercel.app/api/user/${user._id}`, users, {
+            const response = await axios.put(`https://ecom-api-2xbg.onrender.com/api/user/${user._id}`, users, {
                 headers: {
                     "Authorization": `Bearer ${localStorage.getItem('token')}`
                 }

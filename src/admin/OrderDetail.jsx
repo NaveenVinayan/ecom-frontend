@@ -14,7 +14,7 @@ const OrderDetail = () => {
     const fetchOrder = async () => {
         setLoading(true)
         try {
-            const response = await axios.get(`https://ecom-api.vercel.app/api/order/${id}`,
+            const response = await axios.get(`https://ecom-api-2xbg.onrender.com/api/order/${id}`,
                 {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem("token")}`
@@ -39,7 +39,7 @@ const OrderDetail = () => {
 
     const changeStatus = async (id, status) => {
         try {
-            const response = await axios.put(`https://ecom-api.vercel.app/api/order/${id}`, { status },
+            const response = await axios.put(`https://ecom-api-2xbg.onrender.com/api/order/${id}`, { status },
                 {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem("token")}`

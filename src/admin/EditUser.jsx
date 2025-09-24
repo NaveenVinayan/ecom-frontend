@@ -17,7 +17,7 @@ const EditUser = () => {
         const fetchUsers = async () => {
 
             try {
-                const response = await axios.get(`https://ecom-api.vercel.app/api/user/${id}`,
+                const response = await axios.get(`https://ecom-api-2xbg.onrender.com/api/user/${id}`,
                     {
                         headers: {
                             Authorization: `Bearer ${localStorage.getItem("token")}`
@@ -57,7 +57,7 @@ const EditUser = () => {
         e.preventDefault()
         
             try {
-                const response = await axios.put(`https://ecom-api.vercel.app/api/user/${id}`, user, {
+                const response = await axios.put(`https://ecom-api-2xbg.onrender.com/api/user/${id}`, user, {
                     headers: {
                         "Authorization": `Bearer ${localStorage.getItem('token')}`
                     }

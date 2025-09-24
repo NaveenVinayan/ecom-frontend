@@ -13,7 +13,7 @@ const ProductDetail = () => {
     const fetchProduct = async () => {
 
       try {
-        const response = await axios.get(`https://ecom-api.vercel.app/api/product/${id}`,
+        const response = await axios.get(`https://ecom-api-2xbg.onrender.com/api/product/${id}`,
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`

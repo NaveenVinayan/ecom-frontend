@@ -21,7 +21,7 @@ const Register = () => {
         } else {
             try {
 
-                const response = await axios.post("https://ecom-api.vercel.app/api/auth/register", { name, email, password })
+                const response = await axios.post("https://ecom-api-2xbg.onrender.com/api/auth/register", { name, email, password })
                 if (response.data.success) {
                     login(response.data.user)
 
