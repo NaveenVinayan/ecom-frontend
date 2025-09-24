@@ -7,7 +7,7 @@ import UserRoutes from './user/routes/UserRoutes'
 import AdminRoutes from './admin/routes/AdminRoutes'
 
 function App() {
-
+ 
   return (
     <Router>
       <Routes>

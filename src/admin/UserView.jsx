@@ -11,7 +11,7 @@ const UserView = () => {
     const fetchUsers = async () => {
       setLoading(true)
       try {
-        const response = await axios.get('https://ecom-api-2xbg.onrender.com/api/user',
+        const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/user`,
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`
@@ -54,7 +54,7 @@ const UserView = () => {
     if (window.confirm("Are you sure you want to delete this product?")) {
       setLoading(true)
       try {
-        const response = await axios.delete(`https://ecom-api-2xbg.onrender.com/api/user/${id}`, {
+        const response = await axios.delete(`${import.meta.env.VITE_API_BASE_URL}/api/user/${id}`, {
           headers: {
             "Authorization": `Bearer ${localStorage.getItem('token')}`
           }

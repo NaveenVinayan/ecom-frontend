@@ -14,7 +14,7 @@ const OrderDetail = () => {
     const fetchOrder = async () => {
         setLoading(true)
         try {
-            const response = await axios.get(`https://ecom-api-2xbg.onrender.com/api/order/${id}`,
+            const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/order/${id}`,
                 {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem("token")}`
@@ -40,7 +40,7 @@ const OrderDetail = () => {
     const changeStatus = async (id, status) => {
         setLoading(true)
         try {
-            const response = await axios.put(`https://ecom-api-2xbg.onrender.com/api/order/${id}`, { status },
+            const response = await axios.put(`${import.meta.env.VITE_API_BASE_URL}/api/order/${id}`, { status },
                 {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem("token")}`
@@ -124,7 +124,7 @@ const OrderDetail = () => {
                             <h3 className="text-lg font-semibold mb-3">🛍 Product Details</h3>
                             <div className="flex items-center gap-4">
                                 <img
-                                    src={`https://ecom-api-2xbg.onrender.com/${order.productId.productImage}`}
+                                    src={`${import.meta.env.VITE_API_BASE_URL}/${order.productId.productImage}`}
                                     alt={order.productId.name}
                                     className="w-24 h-24 object-cover rounded-md border"
                                 />

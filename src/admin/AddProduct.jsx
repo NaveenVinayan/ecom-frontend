@@ -29,7 +29,7 @@ const AddProduct = () => {
         setLoading(true)
         try {
 
-            const response = await axios.post('https://ecom-api-2xbg.onrender.com/api/product/add', formDataobj, {
+            const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/product/add`, formDataobj, {
                 headers: {
                     "Authorization": `Bearer ${localStorage.getItem('token')}`
                 }

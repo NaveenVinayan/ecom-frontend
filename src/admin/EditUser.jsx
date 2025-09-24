@@ -19,7 +19,7 @@ const EditUser = () => {
             setLoading(true)
             try {
 
-                const response = await axios.get(`https://ecom-api-2xbg.onrender.com/api/user/${id}`,
+                const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/user/${id}`,
                     {
                         headers: {
                             Authorization: `Bearer ${localStorage.getItem("token")}`
@@ -63,7 +63,7 @@ const EditUser = () => {
         setLoading(true)
         try {
 
-            const response = await axios.put(`https://ecom-api-2xbg.onrender.com/api/user/${id}`, user, {
+            const response = await axios.put(`${import.meta.env.VITE_API_BASE_URL}/api/user/${id}`, user, {
                 headers: {
                     "Authorization": `Bearer ${localStorage.getItem('token')}`
                 }

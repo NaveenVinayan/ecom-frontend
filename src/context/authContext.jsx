@@ -15,7 +15,7 @@ const authContext = ({ children }) => {
             try {
                 const token = localStorage.getItem("token")
                 if (token) {
-                    const response = await axios.get('https://ecom-api-2xbg.onrender.com/api/auth/verify',
+                    const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/auth/verify`,
                         {
                             headers: {
                                 Authorization: `Bearer ${token}`,

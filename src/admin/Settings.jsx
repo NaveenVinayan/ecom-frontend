@@ -23,7 +23,7 @@ const Settings = () => {
     const fetchUsers = async () => {
       setLoading(true)
       try {
-        const response = await axios.get(`https://ecom-api-2xbg.onrender.com/api/user/${user._id}`,
+        const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/user/${user._id}`,
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`
@@ -64,7 +64,7 @@ const Settings = () => {
     e.preventDefault()
     setLoading(true)
     try {
-      const response = await axios.put(`https://ecom-api-2xbg.onrender.com/api/user/${user._id}`, users, {
+      const response = await axios.put(`${import.meta.env.VITE_API_BASE_URL}/api/user/${user._id}`, users, {
         headers: {
           "Authorization": `Bearer ${localStorage.getItem('token')}`
         }

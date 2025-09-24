@@ -29,7 +29,7 @@ const Checkout = () => {
     e.preventDefault();
     setLoading(true)
     try {
-      const response = await axios.post(`https://ecom-api-2xbg.onrender.com/api/order/${id}/${user._id}`, address, {
+      const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/order/${id}/${user._id}`, address, {
         headers: {
           "Authorization": `Bearer ${localStorage.getItem('token')}`
         }

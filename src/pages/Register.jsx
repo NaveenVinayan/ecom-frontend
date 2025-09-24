@@ -22,7 +22,7 @@ const Register = () => {
         } else {
             try {
                 setLoading(true)
-                const response = await axios.post("https://ecom-api-2xbg.onrender.com/api/auth/register", { name, email, password })
+                const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/auth/register`, { name, email, password })
                 if (response.data.success) {
                     login(response.data.user)
 

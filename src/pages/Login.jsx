@@ -15,7 +15,9 @@ const Login = () => {
         e.preventDefault()
         try {
             setLoading(true)
-            const response = await axios.post("https://ecom-api-2xbg.onrender.com/api/auth/login", { email, password })
+            console.log("API Base URL:", import.meta.env.VITE_API_BASE_URL);
+ 
+            const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/auth/login`, { email, password })
             if (response.data.success) {
                 login(response.data.user)
                 localStorage.setItem("token", response.data.token)
@@ -38,7 +40,7 @@ const Login = () => {
 
     return (
         <>
-            { loading ?
+            {loading ?
                 (
                     <div className="flex items-center justify-center min-h-screen">
                         <div role="status">

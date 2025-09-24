@@ -14,7 +14,7 @@ const ProductView = () => {
         const fetchProducts = async () => {
             setLoading(true)
             try {
-                const response = await axios.get('https://ecom-api-2xbg.onrender.com/api/product',
+                const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/product`,
                     {
                         headers: {
                             Authorization: `Bearer ${localStorage.getItem("token")}`
@@ -29,7 +29,7 @@ const ProductView = () => {
                             _id: prd._id,
                             sno: sno++,
                             name: prd.name,
-                            productImage: `https://ecom-api-2xbg.onrender.com/${prd.productImage}`,
+                            productImage: `${import.meta.env.VITE_API_BASE_URL}/${prd.productImage}`,
                             description: prd.description,
                             price: prd.price
 
@@ -57,7 +57,7 @@ const ProductView = () => {
 
             setLoading(true)
             try {
-                const response = await axios.delete(`https://ecom-api-2xbg.onrender.com/api/product/${id}`, {
+                const response = await axios.delete(`${import.meta.env.VITE_API_BASE_URL}/api/product/${id}`, {
                     headers: {
                         "Authorization": `Bearer ${localStorage.getItem('token')}`
                     }

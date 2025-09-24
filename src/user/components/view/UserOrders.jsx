@@ -32,7 +32,7 @@ const Userorders = () => {
       setLoading(true)
 
       try {
-        const response = await axios.get(`https://ecom-api-2xbg.onrender.com/api/order/orders/${user._id}`,
+        const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/order/orders/${user._id}`,
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`
@@ -47,7 +47,7 @@ const Userorders = () => {
               _id: ord._id,
               productId: ord.productId?._id,
               productName: ord.productId?.fullName,
-              productImage: `https://ecom-api-2xbg.onrender.com/${ord.productId?.productImage}`,
+              productImage: `${import.meta.env.VITE_API_BASE_URL}/${ord.productId?.productImage}`,
               description: ord.productId?.description,
               price: ord.productId?.price,
               status: ord.status,
@@ -80,7 +80,7 @@ const Userorders = () => {
     if (window.confirm("Are you sure you want to cancel this product?")) {
       setLoading(true)
       try {
-        const response = await axios.put(`https://ecom-api-2xbg.onrender.com/api/order/cancel/${_id}`, {}, {
+        const response = await axios.put(`${import.meta.env.VITE_API_BASE_URL}/api/order/cancel/${_id}`, {}, {
           headers: {
             "Authorization": `Bearer ${localStorage.getItem('token')}`
           }
