@@ -212,7 +212,20 @@ const Userorders = () => {
                   </div>
 
                 </div>
-              ))}
+              ))
+              }
+              {
+              !loading && orders.length === 0 && (
+
+                <div
+
+                  className="text-center text-gray-500 py-4 border border-gray-300"
+                >
+                  No orders found.
+                </div>
+
+              )
+            }
             </div>
           </div>
         )
