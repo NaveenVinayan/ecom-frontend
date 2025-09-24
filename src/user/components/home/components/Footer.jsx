@@ -19,10 +19,38 @@ const Footer = () => {
                 <div>
                     <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
                     <ul className="space-y-2">
-                        <li><button onClick={() => navigate('/user-home')}>Home</button></li>
-                        <li><button onClick={() => navigate('/user-home/products-list')}>Products</button></li>
-                        <li><button onClick={() => navigate('/user-home/orders')}>Orders</button></li>
-                        <li><button onClick={() => navigate('/user-home/account-details')}>Account</button></li>
+                        <li>
+                            <button
+                                onClick={() => navigate('/user-home')}
+                                className="group transition duration-300"
+                            >Home
+                                <span className="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-gray-100"></span>
+                            </button>
+                        </li>
+                        <li>
+                            <button
+                                onClick={() => navigate('/user-home/products-list')}
+                                className="group transition duration-300"
+                            >Products
+                            <span className="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-gray-100"></span>
+                            </button>
+                        </li>
+                        <li>
+                            <button
+                                onClick={() => navigate('/user-home/orders')}
+                                className="group transition duration-300"
+                            >Orders
+                            <span className="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-gray-100"></span>
+                            </button>
+                        </li>
+                        <li>
+                            <button
+                                onClick={() => navigate('/user-home/account-details')}
+                                className="group transition duration-300"
+                            >Account
+                            <span className="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-gray-100"></span>
+                            </button>
+                        </li>
                     </ul>
                 </div>
 

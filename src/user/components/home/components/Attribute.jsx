@@ -25,7 +25,7 @@ const Attribute = () => {
   ];
 
   return (
-    <div className=" px-6 py-20 sm:px-10 lg:px-20">
+    <div className="  py-20 lg:px-25 px-10">
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
         {items.map((item, idx) => (
           <div

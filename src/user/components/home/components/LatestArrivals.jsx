@@ -60,7 +60,7 @@ const LatestArrivals = () => {
 
 
     return (
-        <header className="container flex flex-col justify-center  bg-white text-black mx-auto lg:px-40">
+        <header className=" flex flex-col justify-center  bg-white text-black lg:px-25 px-10">
             {/* Heading */}
             <div className="py-20 md:py-16 lg:py-20 flex items-center justify-center">
                 <div className="text-center max-w-3xl px-4">

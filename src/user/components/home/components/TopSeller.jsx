@@ -52,7 +52,7 @@ const TopSeller = () => {
     }, []);
 
     return (
-        <div className="lg:px-25 px-10 py-20 bg-white text-black">
+        <div className="lg:px-25 px-10 pb-20 bg-white text-black">
             {/* TITLE */}
             <div className="flex justify-between py-10">
                 <h1 className="text-2xl md:text-4xl ">BEST SELLING ITEMS</h1>
@@ -111,7 +111,7 @@ const TopSeller = () => {
                                 <div className="mb-4 overflow-hidden w-full h">
                                     <img
                                         onClick={() => navigate(`/user-home/products-list/detail/${item._id}`)}
-                                        className="w-full h-full object-cover duration-300 ease-in-out group-hover:scale-110 cursor-pointer" src={item.productImage}
+                                        className="w-64 h-64 sm:w-72 sm:h-72 md:w-80 md:h-80 lg:w-96 lg:h-96 object-cover duration-300 ease-in-out group-hover:scale-110 cursor-pointer" src={item.productImage}
                                         alt={item.name}
                                     />
                                 </div>
