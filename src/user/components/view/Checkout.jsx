@@ -35,7 +35,7 @@ const Checkout = () => {
         }
       })
       if (response.data.success) {
-        navigate(`/user-home/products-list/detail/${id}`)
+        navigate(`/user-home/orders`)
       }
     } catch (error) {
       if (error.response && !error.response.data.success) {
