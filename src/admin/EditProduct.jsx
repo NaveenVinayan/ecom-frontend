@@ -80,7 +80,8 @@ const EditProduct = () => {
     }
 
     return (
-        <> {product ? (
+
+        <> {loading ? (
             <div className="max-w-3xl mx-auto mt-10 bg-white p-8 shadow-md rounded-md">
                 <div>
                     <h2 className="text-2xl font-bold mb-6 text-gray-800 border-b pb-3">
