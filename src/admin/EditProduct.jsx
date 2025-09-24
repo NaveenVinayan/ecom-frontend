@@ -16,6 +16,7 @@ const EditProduct = () => {
 
     useEffect(() => {
         const fetchProducts = async () => {
+            setLoading(true)
             try {
                 const response = await axios.get(`https://ecom-api-2xbg.onrender.com/api/product/${id}`,
                     {
@@ -38,6 +39,8 @@ const EditProduct = () => {
                 if (error.response && !error.response.data.success) {
                     alert(error.response.data.error)
                 }
+            } finally {
+                setLoading(false)
             }
         }
         fetchProducts()
