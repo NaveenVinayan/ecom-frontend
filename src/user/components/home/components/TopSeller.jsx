@@ -54,9 +54,9 @@ const TopSeller = () => {
     return (
         <div className="lg:px-25 px-10 py-20 bg-white text-black">
             {/* TITLE */}
-            <div className="flex justify-between items-center py-10">
+            <div className="flex justify-between py-10">
                 <h1 className="text-2xl md:text-4xl ">BEST SELLING ITEMS</h1>
-                <div className="">
+                <div className="content-end">
                     <button
                         onClick={() => navigate("/products")}
                         className="text-md md:text-lg underline hover:text-purple-600 transition-colors"
@@ -74,11 +74,26 @@ const TopSeller = () => {
                 <Swiper
                     modules={[Navigation]}
                     navigation
-                    spaceBetween={20}
+                    spaceBetween={30}
                     breakpoints={{
-                        320: { slidesPerView: 1 },
-                        640: { slidesPerView: 2 },
-                        1024: { slidesPerView: 3 },
+                        320: {
+                            slidesPerView: 1,
+                            // Only center slides if there's more than one slide
+                            centeredSlides: products > 1,
+                        },
+                        640: {
+                            slidesPerView: 2,
+                            // Only center slides if there's more than two slides
+                            centeredSlides: products > 2,
+                        },
+                        1024: {
+                            slidesPerView: 3,
+                            centeredSlides: false, // Keep it simple for larger screens
+                        },
+                        1440: {
+                            slidesPerView: 4,
+                            centeredSlides: false,
+                        },
                     }}
                 >
                     {products.map((item) => (
@@ -93,7 +108,7 @@ const TopSeller = () => {
                                 </div>
 
                                 {/* Image */}
-                                <div className="mb-4 overflow-hidden w-full h-64 sm:h-72 md:h-80 lg:h-96">
+                                <div className="mb-4 overflow-hidden w-full h">
                                     <img
                                         onClick={() => navigate(`/user-home/products-list/detail/${item._id}`)}
                                         className="w-full h-full object-cover duration-300 ease-in-out group-hover:scale-110 cursor-pointer" src={item.productImage}
@@ -106,7 +121,6 @@ const TopSeller = () => {
                                     onClick={() => navigate(`/user-home/products-list/detail/${item._id}`)}
                                     className="text-xl mb-3">
                                     {item.name}
-                                    <div className="bg-black h-[1px] w-0 group-hover:w-full transition-all duration-500"></div>
                                 </div>
 
                                 {/* Price + Add to Cart */}
