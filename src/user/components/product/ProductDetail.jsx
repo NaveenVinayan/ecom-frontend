@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 const ProductDetail = () => {
-  const [product, setProduct] = useState(null)
+  const [product, setProduct] = useState([])
   const [loading, setLoading] = useState(false)
 
   const navigate = useNavigate();
@@ -85,7 +85,7 @@ const ProductDetail = () => {
         <div className="flex flex-col items-center">
           <img
             src={`https://ecom-api-2xbg.onrender.com/${product.productImage}`}
-            alt=""
+            alt={`https://ecom-api-2xbg.onrender.com/${product.productImage}`}
             className="rounded-lg shadow-lg w-full max-w-md object-cover"
           />
 
