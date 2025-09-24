@@ -4,12 +4,12 @@ import axios from 'axios'
 
 const UserView = () => {
   const [users, setUsers] = useState([]);
-  const [prdLoading, setPrdLoading] = useState(false)
+  const [loading, setLoading] = useState(false)
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUsers = async () => {
-      setPrdLoading(true)
+      setLoading(true)
       try {
         const response = await axios.get('https://ecom-api-2xbg.onrender.com/api/user',
           {
@@ -41,7 +41,7 @@ const UserView = () => {
           alert(error.response.data.error)
         }
       } finally {
-        setPrdLoading(false);
+        setLoading(false);
       }
     }
     fetchUsers()

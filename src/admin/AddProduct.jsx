@@ -6,7 +6,7 @@ import axios from 'axios'
 const AddProduct = () => {
 
     const [formData, setFormData] = useState({})
-
+    const [loading ,setLoading ]= useState(false)
     const navigate = useNavigate()
 
 
@@ -26,7 +26,9 @@ const AddProduct = () => {
         Object.keys(formData).forEach((key) => {
             formDataobj.append(key, formData[key])
         })
+        setLoading(true) 
         try {
+                       
             const response = await axios.post('https://ecom-api-2xbg.onrender.com/api/product/add', formDataobj, {
                 headers: {
                     "Authorization": `Bearer ${localStorage.getItem('token')}`
@@ -35,10 +37,13 @@ const AddProduct = () => {
             if (response.data.success) {
                 navigate("/admin-dashboard")
             }
+            
         } catch (error) {
             if (error.response && !error.response.data.success) {
                 alert(error.response.data.error)
             }
+        } finally {
+            setLoading(false);
         }
     }
 

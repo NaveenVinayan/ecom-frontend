@@ -5,18 +5,20 @@ import { useNavigate, useParams } from 'react-router-dom'
 const EditUser = () => {
     const [user, setUser] = useState({
         name: '',
-        email: '', 
-        oldPassword:'',
-        newPassword:'',      
+        email: '',
+        oldPassword: '',
+        newPassword: '',
     })
+    const [loading, setLoading] = useState(false)
 
     const navigate = useNavigate()
     const { id } = useParams()
 
     useEffect(() => {
         const fetchUsers = async () => {
-
+            setLoading(true)
             try {
+
                 const response = await axios.get(`https://ecom-api-2xbg.onrender.com/api/user/${id}`,
                     {
                         headers: {
@@ -30,7 +32,7 @@ const EditUser = () => {
                         ...prev,
                         name: user.name,
                         email: user.email,
-                        
+
                     }))
 
                 }
@@ -40,7 +42,10 @@ const EditUser = () => {
                 if (error.response && !error.response.data.success) {
                     alert(error.response.data.error)
                 }
+            } finally {
+                setLoading(false);
             }
+
         }
         fetchUsers()
     }, [])
@@ -55,22 +60,24 @@ const EditUser = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        
-            try {
-                const response = await axios.put(`https://ecom-api-2xbg.onrender.com/api/user/${id}`, user, {
-                    headers: {
-                        "Authorization": `Bearer ${localStorage.getItem('token')}`
-                    }
-                })
-                if (response.data.success) {
-                    navigate("/admin-dashboard/view-users")
+        setLoading(true)
+        try {
+
+            const response = await axios.put(`https://ecom-api-2xbg.onrender.com/api/user/${id}`, user, {
+                headers: {
+                    "Authorization": `Bearer ${localStorage.getItem('token')}`
                 }
-            } catch (error) {
-                if (error.response && !error.response.data.success) {
-                    alert(error.response.data.error)
-                }
+            })
+            if (response.data.success) {
+                navigate("/admin-dashboard/view-users")
             }
-       
+            setLoading(false)
+        } catch (error) {
+            if (error.response && !error.response.data.success) {
+                alert(error.response.data.error)
+            }
+        }
+
     }
 
     return (
@@ -105,7 +112,7 @@ const EditUser = () => {
                             Email
                         </label>
                         <input
-                        type='text'
+                            type='text'
                             name="email"
                             rows="3"
                             onChange={handleChange}
@@ -125,7 +132,7 @@ const EditUser = () => {
                             name="oldPassword"
                             value={user.oldPassword}
                             onChange={handleChange}
-                            
+
                             className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:border-yellow-500 focus:ring-yellow-500"
                             required
                         />

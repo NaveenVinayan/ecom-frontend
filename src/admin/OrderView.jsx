@@ -5,12 +5,12 @@ import { useNavigate } from "react-router-dom";
 const OrderView = () => {
 
   const [orders, setOrders] = useState([])
-  const [prdLoading, setPrdLoading] = useState(false)
+  const [loading, setLoading] = useState(false)
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchOrders = async () => {
-      setPrdLoading(true)
+      setLoading(true)
       try {
         const response = await axios.get('https://ecom-api-2xbg.onrender.com/api/order',
           {
@@ -54,7 +54,7 @@ const OrderView = () => {
           alert(error.response.data.error)
         }
       } finally {
-        setPrdLoading(false);
+        setLoading(false);
       }
     }
     fetchOrders()

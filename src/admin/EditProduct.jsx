@@ -10,14 +10,15 @@ const EditProduct = () => {
 
 
     })
-
+    const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
     const { id } = useParams()
 
     useEffect(() => {
         const fetchProducts = async () => {
-
+            setLoading(true)
             try {
+
                 const response = await axios.get(`https://ecom-api-2xbg.onrender.com/api/product/${id}`,
                     {
                         headers: {
@@ -41,6 +42,8 @@ const EditProduct = () => {
                 if (error.response && !error.response.data.success) {
                     alert(error.response.data.error)
                 }
+            } finally {
+                setLoading(false);
             }
         }
         fetchProducts()
@@ -56,22 +59,24 @@ const EditProduct = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        
-            try {
-                const response = await axios.put(`https://ecom-api-2xbg.onrender.com/api/product/${id}`, product, {
-                    headers: {
-                        "Authorization": `Bearer ${localStorage.getItem('token')}`
-                    }
-                })
-                if (response.data.success) {
-                    navigate("/admin-dashboard")
+
+        try {
+            setLoading(true)
+            const response = await axios.put(`https://ecom-api-2xbg.onrender.com/api/product/${id}`, product, {
+                headers: {
+                    "Authorization": `Bearer ${localStorage.getItem('token')}`
                 }
-            } catch (error) {
-                if (error.response && !error.response.data.success) {
-                    alert(error.response.data.error)
-                }
+            })
+            if (response.data.success) {
+                navigate("/admin-dashboard")
             }
-       
+            setLoading(false)
+        } catch (error) {
+            if (error.response && !error.response.data.success) {
+                alert(error.response.data.error)
+            }
+        }
+
     }
 
     return (

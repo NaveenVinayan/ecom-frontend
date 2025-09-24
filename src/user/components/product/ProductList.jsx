@@ -13,12 +13,12 @@ import axios from "axios";
 
 const ProductList = () => {
   const [products, setProducts] = useState([])
-  const [prdLoading, setPrdLoading] = useState(false)
+  const [loading, setLoading] = useState(false)
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchProducts = async () => {
-      setPrdLoading(true)
+      setLoading(true)
       try {
         const response = await axios.get('https://ecom-api-2xbg.onrender.com/api/product',
           {
@@ -50,7 +50,7 @@ const ProductList = () => {
           alert(error.response.data.error)
         }
       } finally {
-        setPrdLoading(false);
+        setLoading(false);
       }
     }
     fetchProducts()
@@ -97,7 +97,7 @@ const ProductList = () => {
       ))
       }
       {
-        !prdLoading && products.length === 0 && (
+        !loading && products.length === 0 && (
 
           <div
 
