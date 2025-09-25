@@ -1,38 +1,57 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Menu, X } from "lucide-react"; // hamburger + close icons
+import { Menu, X } from "lucide-react"; // icons
+import { CiUser } from "react-icons/ci";
 
 const UserNavbar = () => {
-  const [open, setOpen] = useState(false); 
-  const navigate = useNavigate(); 
-
-  const menuItems = [
-    { name: "HOME", path: "/user-home" },
-    { name: "PRODUCTS", path: "/user-home/products-list" },
-    { name: "ORDERS", path: "/user-home/orders" },
-    { name: "ACCOUNT", path: "/user-home/account-details" },
-  ];
+  const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
 
   return (
-    <div className="bg-slate-950 text-gray-200 shadow-md sticky top-0 z-50">
-      <nav className="flex items-center justify-between px-6 py-3">
+    <div className="bg-slate-950 text-gray-200 shadow-md h-20 sticky top-0 z-50">
+      <nav className="flex items-center justify-between h-20 px-6 ">
         {/* Logo */}
-        <div onClick={()=> navigate('/user-home')} className="font-bold text-gray-300 text-lg cursor-pointer">
-          LOGO
+        <div
+          onClick={() => navigate("/user-home")}
+          className="font-bold text-gray-300 text-3xl cursor-pointer"
+        >
+          eCart
         </div>
 
         {/* Desktop Menu */}
         <div className="hidden md:flex space-x-6">
-          {menuItems.map((item) => (
-            <button
-              key={item.name}
-              onClick={() => navigate(item.path)}
-              className="uppercase group transition duration-300 hover:text-purple-400"
-            >
-              {item.name}
-              <span className="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-purple-400"></span>
-            </button>
-          ))}
+          <button
+            onClick={() => navigate("/user-home")}
+            className="uppercase group transition duration-300 hover:text-purple-400"
+          >
+            HOME
+            <span className="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-purple-400"></span>
+          </button>
+
+          <button
+            onClick={() => navigate("/user-home/products-list")}
+            className="uppercase group transition duration-300 hover:text-purple-400"
+          >
+            PRODUCTS
+            <span className="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-purple-400"></span>
+          </button>
+
+          <button
+            onClick={() => navigate("/user-home/orders")}
+            className="uppercase group transition duration-300 hover:text-purple-400"
+          >
+            ORDERS
+            <span className="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-purple-400"></span>
+          </button>
+
+          <button
+            onClick={() => navigate("/user-home/account-details")}
+            className="group transition duration-300 hover:text-purple-400"
+          >
+            <div className="p-2 rounded-full bg-white text-black">
+              <CiUser size={25} />
+            </div>
+          </button>
         </div>
 
         {/* Mobile Menu Button */}
@@ -46,18 +65,48 @@ const UserNavbar = () => {
       {/* Mobile Dropdown */}
       {open && (
         <div className="md:hidden bg-slate-900 text-center space-y-4 py-4">
-          {menuItems.map((item) => (
-            <button
-              key={item.name}
-              onClick={() => {
-                navigate(item.path);
-                setOpen(false); // close menu after click
-              }}
-              className="block w-full uppercase py-2 hover:text-purple-400 transition"
+          <button
+            onClick={() => {
+              navigate("/user-home");
+              setOpen(false);
+            }}
+            className="block w-full uppercase py-2 hover:text-purple-400 transition"
+          >
+            HOME
+          </button>
+
+          <button
+            onClick={() => {
+              navigate("/user-home/products-list");
+              setOpen(false);
+            }}
+            className="block w-full uppercase py-2 hover:text-purple-400 transition"
+          >
+            PRODUCTS
+          </button>
+
+          <button
+            onClick={() => {
+              navigate("/user-home/orders");
+              setOpen(false);
+            }}
+            className="block w-full uppercase py-2 hover:text-purple-400 transition"
+          >
+            ORDERS
+          </button>
+
+          <button
+            onClick={() => {
+              navigate("/user-home/account-details");
+              setOpen(false);
+            }}
+            className="block w-full uppercase py-2 hover:text-purple-400 transition"
+          >
+            <div className="block w-full uppercase py-2 hover:text-purple-400 transition"
             >
-              {item.name}
-            </button>
-          ))}
+              Account
+            </div>
+          </button>
         </div>
       )}
     </div>

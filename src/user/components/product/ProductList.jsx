@@ -1,11 +1,11 @@
 import React from 'react'
 import AspectRatio from '@mui/joy/AspectRatio';
-import Button from '@mui/joy/Button';
 import Card from '@mui/joy/Card';
 import CardContent from '@mui/joy/CardContent';
 import IconButton from '@mui/joy/IconButton';
 import Typography from '@mui/joy/Typography';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import { GrFormNextLink, GrFormPreviousLink } from "react-icons/gr";
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from "react";
 import { useState } from "react";
@@ -13,22 +13,21 @@ import axios from "axios";
 
 const ProductList = () => {
   const [products, setProducts] = useState([])
+  const [filteredProduct, setFilteredProduct] = useState([])
   const [loading, setLoading] = useState(false)
+
+  // Pagination states
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchProducts = async () => {
       setLoading(true)
       try {
-        const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/product`,
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`
-            }
-          })
+        const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/product`)
 
         if (response.data.success) {
-
 
           const data = await response.data.products.map((prd) => (
             {
@@ -42,6 +41,7 @@ const ProductList = () => {
           ));
 
           setProducts(data)
+          setFilteredProduct(data)
         }
 
 
@@ -56,10 +56,25 @@ const ProductList = () => {
     fetchProducts()
   }, [])
 
+  const handleFilter = (e) => {
+    const records = products.filter((prd) => (
+      prd.name.toLowerCase().includes(e.target.value.toLowerCase())
+    ))
+    setFilteredProduct(records);
+    setCurrentPage(1);
+  }
+
+  const totalPages = Math.ceil(filteredProduct.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const currentItems = filteredProduct.slice(
+    startIndex,
+    startIndex + itemsPerPage
+  );
+
 
   return (
     <>
-      {  loading ?
+      {loading ?
         (
           <div className="flex items-center justify-center min-h-screen">
             <div role="status">
@@ -101,57 +116,108 @@ const ProductList = () => {
             </div>
           </div>
         ) : (
-          <div className="flex flex-wrap gap-6 p-6">
-            {products.map((prd) => (
-              <Card key={prd._id} sx={{ width: 300, cursor: "pointer", transition: "0.3s", "&:hover": { boxShadow: "lg" } }} onClick={() => navigate(`/user-home/products-list/detail/${prd._id}`)}>
-                {/* Wishlist / Favorite Button */}
-                <IconButton
-                  aria-label="add to wishlist"
-                  variant="plain"
-                  color="neutral"
-                  size="sm"
-                  sx={{ position: 'absolute', top: '0.75rem', right: '0.75rem' }}
+          <div>
+            <div className="px-6 pt-2">
+              <input
+                type="text"
+                placeholder="Search by product name"
+                onChange={handleFilter}
+                className="w-full max-w-sm px-4 py-2 border border-gray-300 rounded-lg shadow-sm 
+               placeholder-gray-400 text-gray-700"
+              />
+            </div>
+
+            <div className="flex flex-wrap gap-6 p-6">
+              {currentItems.map((prd) => (
+                <Card key={prd._id} sx={{ width: 300, cursor: "pointer", transition: "0.3s", "&:hover": { boxShadow: "lg" } }} onClick={() => navigate(`/user-home/products-list/detail/${prd._id}`)}>
+                  {/* Wishlist / Favorite Button */}
+                  <IconButton
+                    aria-label="add to wishlist"
+                    variant="plain"
+                    color="neutral"
+                    size="sm"
+                    sx={{ position: 'absolute', top: '0.75rem', right: '0.75rem' }}
+                  >
+                    <FavoriteBorderIcon />
+                  </IconButton>
+
+                  {/* Product Image */}
+                  <AspectRatio minHeight="270px" maxHeight="270px">
+                    <img
+                      src={prd.productImage}
+                      alt={prd.productImage}
+                      loading="lazy"
+                    />
+                  </AspectRatio>
+
+                  {/* Product Info */}
+                  <CardContent>
+                    <Typography level="title-md" sx={{ mb: 0.5 }}>
+                      {prd.name}
+                    </Typography>
+                    <Typography level="body-sm" textColor="text.secondary" sx={{ mb: 1 }}>
+                      {prd.description}
+                    </Typography>
+                    <Typography level="title-lg" fontWeight="lg" color="success" sx={{ mb: 2 }}>
+                      ₹{prd.price}
+                    </Typography>
+                  </CardContent>
+                </Card>
+              ))
+              }
+              {
+                !loading && products.length === 0 && (
+
+                  <div
+
+                    className="text-center text-gray-500 py-4 border border-gray-300"
+                  >
+                    No products found.
+                  </div>
+
+                )
+              }
+            </div >
+
+            {/* Pagination Controls */}
+            {filteredProduct.length > itemsPerPage && (
+              <div className="flex justify-center mt-6 space-x-2">
+                <button
+                  onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
+                  disabled={currentPage === 1}
+                  className="flex items-center gap-1 px-3 py-1 border rounded transition-transform duration-200 
+             hover:scale-105 hover:bg-gray-100 disabled:opacity-50 group"
                 >
-                  <FavoriteBorderIcon />
-                </IconButton>
+                  <GrFormPreviousLink className="text-xl transform transition-transform duration-200 group-hover:-translate-x-1" />
+                  <span>Prev</span>
+                </button>
 
-                {/* Product Image */}
-                <AspectRatio minHeight="270px" maxHeight="270px">
-                  <img
-                    src={prd.productImage}
-                    alt={prd.productImage}
-                    loading="lazy"
-                  />
-                </AspectRatio>
+                {/* {[...Array(totalPages)].map((_, i) => (
+                  <button
+                    key={i}
+                    onClick={() => setCurrentPage(i + 1)}
+                    className={`px-3 py-1 border rounded ${currentPage === i + 1
+                        ? "bg-black text-white"
+                        : "hover:bg-gray-100"
+                      }`}
+                  >
+                    {i + 1}
+                  </button>
+                ))} */}
 
-                {/* Product Info */}
-                <CardContent>
-                  <Typography level="title-md" sx={{ mb: 0.5 }}>
-                    {prd.name}
-                  </Typography>
-                  <Typography level="body-sm" textColor="text.secondary" sx={{ mb: 1 }}>
-                    {prd.description}
-                  </Typography>
-                  <Typography level="title-lg" fontWeight="lg" color="success" sx={{ mb: 2 }}>
-                    ₹{prd.price}
-                  </Typography>
-                </CardContent>
-              </Card>
-            ))
-            }
-            {
-              !loading && products.length === 0 && (
-
-                <div
-
-                  className="text-center text-gray-500 py-4 border border-gray-300"
+                <button
+                  onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
+                  disabled={currentPage === totalPages}
+                  className="flex items-center gap-1 px-3 py-1 border rounded transition-transform duration-200 
+             hover:scale-105 hover:bg-gray-100 disabled:opacity-50 group"
                 >
-                  No products found.
-                </div>
+                  <span>Next</span>
+                  <GrFormNextLink className="text-xl transform transition-transform duration-200 group-hover:translate-x-1" />
+                </button>
 
-              )
-            }
-          </div >
+              </div>
+            )}
+          </div>
         )
       }
     </>

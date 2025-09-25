@@ -58,7 +58,7 @@ const TopSeller = () => {
                 <h1 className="text-2xl md:text-4xl ">BEST SELLING ITEMS</h1>
                 <div className="content-end">
                     <button
-                        onClick={() => navigate("/products")}
+                        onClick={() => navigate("/user-home/products-list")}
                         className="text-md md:text-lg underline hover:text-purple-600 transition-colors"
                     >
                         VIEW ALL PRODUCTS

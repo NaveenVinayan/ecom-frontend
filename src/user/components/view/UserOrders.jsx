@@ -27,51 +27,47 @@ const Userorders = () => {
 
   const { user } = useAuth()
 
-  useEffect(() => {
-    const fetchProducts = async () => {
-      setLoading(true)
 
-      try {
-        const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/order/orders/${user._id}`,
+  const fetchProducts = async () => {
+    setLoading(true)
+    try {
+      const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/order/orders/${user._id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`
+          }
+        })
+
+      if (response.data.success) {
+
+        const data = await response.data.orders.map((ord) => (
           {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`
-            }
-          })
+            _id: ord._id,
+            productId: ord.productId?._id,
+            productName: ord.productId?.fullName,
+            productImage: `${import.meta.env.VITE_API_BASE_URL}/${ord.productId?.productImage}`,
+            description: ord.productId?.description,
+            price: ord.productId?.price,
+            status: ord.status,
+            date: ord.createdAt
 
-        if (response.data.success) {
+          }
+        ));
 
+        const sortedData = [...data].sort((a, b) => new Date(b.date) - new Date(a.date));
 
-          const data = await response.data.orders.map((ord) => (
-            {
-              _id: ord._id,
-              productId: ord.productId?._id,
-              productName: ord.productId?.fullName,
-              productImage: `${import.meta.env.VITE_API_BASE_URL}/${ord.productId?.productImage}`,
-              description: ord.productId?.description,
-              price: ord.productId?.price,
-              status: ord.status,
-              date: ord.createdAt
-
-            }
-          ));
-
-          const sortedData = [...data].sort((a, b) => new Date(b.date) - new Date(a.date));
-
-          setOrders(sortedData)
-        }
-
-
-
-
-      } catch (error) {
-        if (error.response && !error.response.data.success) {
-          alert(error.response.data.error)
-        }
-      } finally {
-        setLoading(false);
+        setOrders(sortedData)
       }
+    } catch (error) {
+      if (error.response && !error.response.data.success) {
+        alert(error.response.data.error)
+      }
+    } finally {
+      setLoading(false);
     }
+  }
+
+  useEffect(() => {
     fetchProducts()
   }, [])
 
@@ -86,7 +82,7 @@ const Userorders = () => {
           }
         })
         if (response.data.success) {
-          setOrders((prev) => prev.filter((p) => p._id !== _id));
+          fetchProducts();
         }
       } catch (error) {
         if (error.response && !error.response.data.success) {
@@ -97,7 +93,6 @@ const Userorders = () => {
       }
     }
   }
-
 
 
   return (
@@ -215,17 +210,17 @@ const Userorders = () => {
               ))
               }
               {
-              !loading && orders.length === 0 && (
+                !loading && orders.length === 0 && (
 
-                <div
+                  <div
 
-                  className="text-center text-gray-500 py-4 border border-gray-300"
-                >
-                  No orders found.
-                </div>
+                    className="text-center text-gray-500 py-4 border border-gray-300"
+                  >
+                    No orders found.
+                  </div>
 
-              )
-            }
+                )
+              }
             </div>
           </div>
         )

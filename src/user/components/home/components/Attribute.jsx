@@ -5,23 +5,23 @@ const Attribute = () => {
     {
       icon: <Headphones className="w-[46px] h-[46px] text-gray-500" strokeWidth={1.5} />,
       title: "24/7 Customer Support",
-      desc: "At imperdiet dui accumsan sit amet nulla risus est ultricies quis.",
+      desc: "Our dedicated support team is available around the clock to help you with inquiries, orders, and product assistance.",
     },
     {
       icon: <Package className="w-[46px] h-[46px] text-gray-500" strokeWidth={1.5} />,
       title: "Special Packaging",
-      desc: "At imperdiet dui accumsan sit amet nulla risus est ultricies quis.",
+      desc: "Every order is carefully packaged with premium materials to ensure your items arrive safe and in perfect condition.",
     },
     {
       icon: <Store className="w-[46px] h-[46px] text-gray-500" strokeWidth={1.5} />,
       title: "Pick Up In Store",
-      desc: "At imperdiet dui accumsan sit amet nulla risus est ultricies quis.",
+      desc: "Shop online and conveniently pick up your items at a nearby store location, saving time and shipping costs.",
     },
     {
       icon: <RotateCcw className="w-[46px] h-[46px] text-gray-500" strokeWidth={1.5} />,
       title: "Free Global Returns",
-      desc: "At imperdiet dui accumsan sit amet nulla risus est ultricies quis.",
-    },
+      desc: "Enjoy hassle-free returns worldwide with our free return policy, giving you confidence and flexibility in your purchase.",
+    }
   ];
 
   return (

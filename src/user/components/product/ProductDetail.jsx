@@ -14,12 +14,7 @@ const ProductDetail = () => {
     const fetchProduct = async () => {
       setLoading(true)
       try {
-        const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/product/${id}`,
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`
-            }
-          })
+        const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/product/${id}`)
 
         if (response.data.success) {
           setProduct(response.data.product)

@@ -9,8 +9,8 @@ const Hero = () => {
     const navigate = useNavigate()
 
     return (
-        <section className=' '>
-            <div className='mx-3 mt-3'>
+        <div className=''>
+            <div className=''>
                 <div className="relative bg-slate-950 text-purple-100 ">
                     {/* Background image with overlay */}
                     <div className="absolute inset-0 bg-cover bg-center"
@@ -22,7 +22,7 @@ const Hero = () => {
                     <div className="absolute inset-0 bg-black/70" />
 
                     {/* Hero content */}
-                    <div className="relative z-10 flex flex-col items-center justify-center text-center h-screen  px-6">
+                    <div className="relative z-10 flex flex-col items-center justify-center text-center h-[calc(100vh-5rem)]  px-6">
                         <h1 className="text-3xl md:text-5xl font-bold uppercase leading-tight text-purple-400 drop-shadow-lg">
                             If you can't stop thinking about it,
                             <br />
@@ -58,7 +58,7 @@ const Hero = () => {
                 <Footer />
             </div>
 
-        </section>
+        </div>
     )
 }
 

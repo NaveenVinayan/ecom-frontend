@@ -9,7 +9,7 @@ const Footer = () => {
             <div className="container mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8">
                 {/* About Section */}
                 <div>
-                    <h2 className="text-xl font-bold mb-4">Brand</h2>
+                    <h2 className="text-xl font-bold mb-4">eCart</h2>
                     <p className="text-gray-400 text-sm">
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                     </p>
