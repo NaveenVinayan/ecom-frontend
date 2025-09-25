@@ -18,8 +18,8 @@ const ProductList = () => {
 
   // Pagination states
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 5;
-  const navigate = useNavigate();
+  const itemsPerPage = 20;
+  const navigate = useNavigate(); 
 
   useEffect(() => {
     const fetchProducts = async () => {
