@@ -92,14 +92,12 @@ const Wishlist = () => {
 
 
     return (
-
-
         <>
             {loading ?
                 (
                     <Loading />
                 ) : (
-                    <div className="max-w-6xl mx-auto px-4 py-8">
+                    <div className=" mx-auto px-4 py-8">
                         <Typography level="h3" sx={{ mb: 6, textAlign: "center" }}>
                             My Wishlist
                         </Typography>
@@ -109,13 +107,14 @@ const Wishlist = () => {
                                 <Card
                                     key={prd._id}
                                     sx={{
-                                        width: 300,
+                                        width: 275,
                                         cursor: "pointer",
                                         transition: "0.3s",
                                         position: "relative",
                                         "&:hover": { boxShadow: "lg" },
                                         "&:hover .wishlist-btn": { opacity: 1, transform: "translateY(0)" }
                                     }}
+                                    onClick={() => navigate(`/home/products-list/detail/${prd._id}`)}
 
                                 >
                                     {/* Heart Icon */}

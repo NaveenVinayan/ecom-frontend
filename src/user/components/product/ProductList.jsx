@@ -129,7 +129,13 @@ const ProductList = () => {
             <div className="flex flex-wrap gap-6 p-6">
               {currentItems.map((prd) => (
                 <Card key={prd._id}
-                  sx={{ width: 300, cursor: "pointer", transition: "0.3s", position: "relative", "&:hover": { boxShadow: "lg" }, "&:hover .wishlist-btn": { opacity: 1, transform: "translateY(0)" } }}
+                  sx={{ 
+                    width: 275,   
+                    cursor: "pointer", 
+                    transition: "0.3s", 
+                    position: "relative",
+                     "&:hover": { boxShadow: "lg" }, 
+                     "&:hover .wishlist-btn": { opacity: 1, transform: "translateY(0)" } }}
                   onClick={() => navigate(`/home/products-list/detail/${prd._id}`)}>
                   {/* ❤️ Wishlist Button */}
                   <IconButton

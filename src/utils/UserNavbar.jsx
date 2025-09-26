@@ -21,6 +21,8 @@ const UserNavbar = () => {
 
         {/* Desktop Menu */}
         <div className="hidden md:flex space-x-6">
+
+          {/* Home */}
           <button
             onClick={() => navigate("/home")}
             className="uppercase group transition duration-300 hover:text-purple-400"
@@ -29,6 +31,7 @@ const UserNavbar = () => {
             <span className="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-purple-400"></span>
           </button>
 
+          {/* Products */}
           <button
             onClick={() => navigate("/home/products-list")}
             className="uppercase group transition duration-300 hover:text-purple-400"
@@ -37,6 +40,7 @@ const UserNavbar = () => {
             <span className="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-purple-400"></span>
           </button>
 
+          {/* Orders */}
           <button
             onClick={() => navigate("/home/orders")}
             className="uppercase group transition duration-300 hover:text-purple-400"
@@ -45,6 +49,7 @@ const UserNavbar = () => {
             <span className="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-purple-400"></span>
           </button>
 
+          {/* Wishlist */}
           <button
             onClick={() => navigate("/home/wishlist")}
             className="uppercase group transition duration-300 hover:text-purple-400"
@@ -53,6 +58,7 @@ const UserNavbar = () => {
             <span className="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-purple-400"></span>
           </button>
 
+          {/* Account */}
           <button
             onClick={() => navigate("/home/account-details")}
             className="group transition duration-300 hover:text-purple-400"
@@ -74,6 +80,7 @@ const UserNavbar = () => {
       {/* Mobile Dropdown */}
       {open && (
         <div className="md:hidden bg-slate-900 text-center space-y-4 py-4">
+          {/* Home */}
           <button
             onClick={() => {
               navigate("/home");
@@ -84,6 +91,7 @@ const UserNavbar = () => {
             HOME
           </button>
 
+          {/* Products */}
           <button
             onClick={() => {
               navigate("/home/products-list");
@@ -94,6 +102,7 @@ const UserNavbar = () => {
             PRODUCTS
           </button>
 
+          {/* Orders */}
           <button
             onClick={() => {
               navigate("/home/orders");
@@ -104,6 +113,18 @@ const UserNavbar = () => {
             ORDERS
           </button>
 
+          {/* Wishlist */}
+          <button
+            onClick={() => {
+              navigate("/home/wishlist");
+              setOpen(false);
+            }}
+            className="block w-full uppercase py-2 hover:text-purple-400 transition"
+          >
+            WISHLIST
+          </button>
+
+          {/* Account */}
           <button
             onClick={() => {
               navigate("/home/account-details");
@@ -111,10 +132,7 @@ const UserNavbar = () => {
             }}
             className="block w-full uppercase py-2 hover:text-purple-400 transition"
           >
-            <div className="block w-full uppercase py-2 hover:text-purple-400 transition"
-            >
-              Account
-            </div>
+            Account
           </button>
         </div>
       )}

@@ -74,10 +74,10 @@ const ProductDetail = () => {
     fetchProduct();
 
   }
-
+  
   return (
     <>{loading ? (
-      <Loading/>
+      <Loading />
     ) : (
       <div className="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-12">
         {/* Product Image Section */}
