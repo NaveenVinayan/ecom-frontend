@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/authContext'
 import { IoMdHome } from "react-icons/io";
 import Loading from '../utils/Loading';
+import { ToastContainer } from 'react-toastify';
 
 const Login = () => {
     const [email, setEmail] = useState("")
@@ -104,6 +105,7 @@ const Login = () => {
                     </div>
                 )
             }
+            <ToastContainer position="bottom-right" autoClose={2000} theme="colored" />
         </>
     )
 }

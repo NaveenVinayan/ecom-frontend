@@ -102,88 +102,90 @@ const Userorders = () => {
         (
           <Loading />
         ) : (
-          <div className="max-w-5xl mx-auto mt-10 p-6 bg-white shadow rounded-lg">
-            <h2 className="text-2xl font-bold mb-6 border-b pb-3">My Orders</h2>
+          <div className="h-[calc(100vh-5rem)]">
+            <div className="max-w-5xl mx-auto mt-10 p-6 bg-white shadow rounded-lg ">
+              <h2 className="text-2xl font-bold mb-6 border-b pb-3">My Orders</h2>
 
-            <div className="space-y-4">
-              {orders.map((order) => (
-                <div
-                  key={order._id}
-                  className="grid grid-cols-1 sm:grid-cols-3 gap-4 p-4 border rounded-lg hover:shadow-md transition"
-                >
-                  <div className="flex flex-wrap gap-2 ">
-                    {/* Product Image */}
-                    <div className="items-center">
-                      <img
-                        src={order.productImage}
-                        alt={order.productName}
-                        onClick={() => navigate(`/home/products-list/detail/${order.productId}`)}
-                        className="w-28 h-28 object-cover rounded-md border"
-                      />
-                    </div>
-
-                    {/* Order Info */}
-                    <div className="sm:col-span-2 flex flex-col justify-center">
-                      <p className="font-semibold">{order.productName}</p>
-                      <p className="text-sm text-gray-500">
-                        Date: {new Date(order.date).toLocaleDateString()}
-                      </p>
-                      <p className="text-sm text-gray-500">
-                        Order ID: #{order._id}
-                      </p>
-                    </div>
-                  </div>
-                  {/* Price + Status */}
-                  <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center">
-                    {/* Price */}
-                    <p className="font-medium text-gray-700 text-lg">
-                      Price: ₹{order.price}
-                    </p>
-                  </div>
-                  <div className="flex justify-between sm:flex-col">
-                    {/* Action + Status */}
-                    {/* Cancel button (conditionally rendered) */}
-                    <div className="self-end">
-                      {(order.status === "pending" || order.status === "shipped") && (
-                        <button
-                          onClick={(e) => handleCancel(e, order._id)}
-                          className="bg-red-600 hover:bg-red-700 text-white font-medium px-4 py-2 rounded-lg shadow-md transition duration-200 ease-in-out active:scale-95"
-                        >
-                          Cancel Order
-                        </button>
-                      )}
-                    </div>
-
-                    <div className="flex flex-col sm:flex-col justify-end gap-2 sm:gap-0 self-end  sm:items-center">
-
-
-                      {/* Status badge */}
-                      <span
-                        className={`px-3 py-1 rounded-full text-sm font-semibold capitalize self-start sm:self-center  ${getStatusStyle(
-                          order.status
-                        )}`}
-                      >
-                        {order.status}
-                      </span>
-                    </div>
-
-                  </div>
-
-                </div>
-              ))
-              }
-              {
-                !loading && orders.length === 0 && (
-
+              <div className="space-y-4">
+                {orders.map((order) => (
                   <div
-
-                    className="text-center text-gray-500 py-4 border border-gray-300 w-full"
+                    key={order._id}
+                    className="grid grid-cols-1 sm:grid-cols-3 gap-4 p-4 border rounded-lg hover:shadow-md transition"
                   >
-                    No orders found.
-                  </div>
+                    <div className="flex flex-wrap gap-2 ">
+                      {/* Product Image */}
+                      <div className="items-center">
+                        <img
+                          src={order.productImage}
+                          alt={order.productName}
+                          onClick={() => navigate(`/home/products-list/detail/${order.productId}`)}
+                          className="w-28 h-28 object-cover rounded-md border"
+                        />
+                      </div>
 
-                )
-              }
+                      {/* Order Info */}
+                      <div className="sm:col-span-2 flex flex-col justify-center">
+                        <p className="font-semibold">{order.productName}</p>
+                        <p className="text-sm text-gray-500">
+                          Date: {new Date(order.date).toLocaleDateString()}
+                        </p>
+                        <p className="text-sm text-gray-500">
+                          Order ID: #{order._id}
+                        </p>
+                      </div>
+                    </div>
+                    {/* Price + Status */}
+                    <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center">
+                      {/* Price */}
+                      <p className="font-medium text-gray-700 text-lg">
+                        Price: ₹{order.price}
+                      </p>
+                    </div>
+                    <div className="flex justify-between sm:flex-col">
+                      {/* Action + Status */}
+                      {/* Cancel button (conditionally rendered) */}
+                      <div className="self-end">
+                        {(order.status === "pending" || order.status === "shipped") && (
+                          <button
+                            onClick={(e) => handleCancel(e, order._id)}
+                            className="bg-red-600 hover:bg-red-700 text-white font-medium px-4 py-2 rounded-lg shadow-md transition duration-200 ease-in-out active:scale-95"
+                          >
+                            Cancel Order
+                          </button>
+                        )}
+                      </div>
+
+                      <div className="flex flex-col sm:flex-col justify-end gap-2 sm:gap-0 self-end  sm:items-center">
+
+
+                        {/* Status badge */}
+                        <span
+                          className={`px-3 py-1 rounded-full text-sm font-semibold capitalize self-start sm:self-center  ${getStatusStyle(
+                            order.status
+                          )}`}
+                        >
+                          {order.status}
+                        </span>
+                      </div>
+
+                    </div>
+
+                  </div>
+                ))
+                }
+                {
+                  !loading && orders.length === 0 && (
+
+                    <div
+
+                      className="text-center text-gray-500 py-4 border border-gray-300 w-full"
+                    >
+                      No orders found.
+                    </div>
+
+                  )
+                }
+              </div>
             </div>
           </div>
         )

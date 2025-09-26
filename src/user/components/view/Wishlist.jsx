@@ -99,10 +99,9 @@ const Wishlist = () => {
                 (
                     <Loading />
                 ) : (
-                    <div className=" mx-auto px-4 py-8">
-                        <Typography level="h3" sx={{ mb: 6, textAlign: "center" }}>
-                            My Wishlist
-                        </Typography>
+                    <div className=" mx-auto px-4 h-[calc(100vh-5rem)] mt-6">
+                        <h2 className="text-2xl font-bold border-b mx-6 pb-3">My Wishlist</h2>
+
 
                         <div className="flex flex-wrap gap-6 p-6">
                             {products.map((prd) => (

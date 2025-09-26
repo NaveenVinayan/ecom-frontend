@@ -11,7 +11,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import axios from "axios";
 import { useAuth } from '../../../context/authContext';
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import Loading from '../../../utils/Loading';
 
 
@@ -26,56 +26,57 @@ const ProductList = () => {
   const navigate = useNavigate();
   const { user } = useAuth()
 
-  const fetchProducts = async () => {
-    setLoading(true)
-    try {
-      const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/product`)
 
-      if (response.data.success) {
-
-        let data = await response.data.products.map((prd) => (
-          {
-            _id: prd._id,
-            name: prd.name,
-            productImage: `${import.meta.env.VITE_API_BASE_URL}/${prd.productImage}`,
-            description: prd.description,
-            price: prd.price,
-            isWishlisted: false,
-
-          }
-        ));
-
-        if (user) {
-          const wishRes = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/wishlist/${user._id}`, {
-            headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
-          });
-          const wishIds = wishRes.data.products.map((w) => w.productId._id);
-
-          // 3️⃣ Mark wishlist items
-          data = data.map((prd) => ({
-            ...prd,
-            isWishlisted: wishIds.includes(prd._id),
-          }));
-        }
-
-        setProducts(data)
-        setFilteredProduct(data)
-      }
-
-
-    } catch (error) {
-      if (error.response && !error.response.data.success) {
-        alert(error.response.data.error)
-      }
-    } finally {
-      setLoading(false);
-    }
-  }
 
   useEffect(() => {
+    const fetchProducts = async () => {
+      setLoading(true)
+      try {
+        const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/product`)
+
+        if (response.data.success) {
+
+          let data = await response.data.products.map((prd) => (
+            {
+              _id: prd._id,
+              name: prd.name,
+              productImage: `${import.meta.env.VITE_API_BASE_URL}/${prd.productImage}`,
+              description: prd.description,
+              price: prd.price,
+              isWishlisted: false,
+
+            }
+          ));
+
+          if (user) {
+            const wishRes = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/wishlist/${user._id}`, {
+              headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
+            });
+            const wishIds = wishRes.data.products.map((w) => w.productId._id);
+
+            // 3️⃣ Mark wishlist items
+            data = data.map((prd) => ({
+              ...prd,
+              isWishlisted: wishIds.includes(prd._id),
+            }));
+          }
+
+          setProducts(data)
+          setFilteredProduct(data)
+        }
+
+
+      } catch (error) {
+        if (error.response && !error.response.data.success) {
+          alert(error.response.data.error)
+        }
+      } finally {
+        setLoading(false);
+      }
+    }
 
     fetchProducts()
-  }, [])
+  }, [user])
 
   const handleFilter = (e) => {
     const records = products.filter((prd) => (
@@ -94,44 +95,42 @@ const ProductList = () => {
 
   const handleWishlist = async (e, id, userId) => {
     e.preventDefault()
-    if (user) {
-      try {
-        const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/wishlist/${id}/${userId}`, {},
-          {
-            headers: {
-              "Authorization": `Bearer ${localStorage.getItem('token')}`
-            }
+
+    try {
+      const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/wishlist/${id}/${userId}`, {},
+        {
+          headers: {
+            "Authorization": `Bearer ${localStorage.getItem('token')}`
           }
-        )
-
-        if (response.data.success) {
-          if (response.data.message.toLowerCase().includes("removed")) {
-            toast.info(response.data.message);
-          } else {
-            toast.success(response.data.message);
-          }
-          setProducts((prevProducts) =>
-            prevProducts.map((prd) =>
-              prd._id === id ? { ...prd, isWishlisted: !prd.isWishlisted } : prd
-            )
-          );
-
-          setFilteredProduct((prevProducts) =>
-            prevProducts.map((prd) =>
-              prd._id === id ? { ...prd, isWishlisted: !prd.isWishlisted } : prd
-            )
-          );
         }
+      )
 
-
-      } catch (error) {
-        if (error.response && !error.response.data.success) {
-          alert(error.response.data.error)
+      if (response.data.success) {
+        if (response.data.message.toLowerCase().includes("removed")) {
+          toast.info(response.data.message);
+        } else {
+          toast.success(response.data.message);
         }
+        setProducts((prevProducts) =>
+          prevProducts.map((prd) =>
+            prd._id === id ? { ...prd, isWishlisted: !prd.isWishlisted } : prd
+          )
+        );
+
+        setFilteredProduct((prevProducts) =>
+          prevProducts.map((prd) =>
+            prd._id === id ? { ...prd, isWishlisted: !prd.isWishlisted } : prd
+          )
+        );
       }
-    } else {
-      navigate('/login')
+
+
+    } catch (error) {
+      if (error.response && !error.response.data.success) {
+        alert(error.response.data.error)
+      }
     }
+
 
   }
 
@@ -142,7 +141,7 @@ const ProductList = () => {
         (
           <Loading />
         ) : (
-          <div>
+          <div className='h-[calc(100vh-5rem)]'>
             <div className="px-6 pt-2">
               <input
                 type="text"
@@ -231,7 +230,7 @@ const ProductList = () => {
               ))
               }
               {
-                !loading && products.length === 0 && (
+                !loading && filteredProduct.length === 0 && (
 
                   <div
 

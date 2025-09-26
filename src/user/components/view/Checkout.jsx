@@ -54,7 +54,7 @@ const Checkout = () => {
         (
           <Loading/>
         ) : (
-          <div className="max-w-2xl mx-auto bg-white shadow-md rounded-lg p-6 mt-6">
+          <div className="max-w-2xl mx-auto bg-white shadow-md rounded-lg p-6 my-8 mt-6">
             <h2 className="text-2xl font-semibold mb-6">Shipping Address</h2>
 
             <form className="space-y-4" onSubmit={handleSubmit}>

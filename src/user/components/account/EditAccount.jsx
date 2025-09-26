@@ -87,7 +87,7 @@ const AccountDetails = () => {
         <> {loading ? (
             <Loading/>
         ) : (
-            <div className="p-5 max-w-lg mx-20">
+            <div className="p-5 max-w-lg lg:mx-20 mx-2 h-[calc(100vh-5rem)]">
                 <h3 className="text-3xl font-semibold border-b-2 border-black pb-4">
                     Account Details
                 </h3>

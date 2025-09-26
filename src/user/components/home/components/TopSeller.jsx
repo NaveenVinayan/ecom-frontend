@@ -10,6 +10,7 @@ import "swiper/css/navigation";
 import { useAuth } from "../../../../context/authContext";
 import IconButton from "@mui/material/IconButton";
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import { toast } from "react-toastify";
 
 
 const TopSeller = () => {
@@ -21,7 +22,7 @@ const TopSeller = () => {
 
 
     useEffect(() => {
-        if (!user) return;
+
         const fetchProducts = async () => {
             setLoading(true);
             try {
@@ -67,38 +68,36 @@ const TopSeller = () => {
 
     const handleWishlist = async (e, id, userId) => {
         e.preventDefault()
-        if (user) {
-            try {
-                const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/wishlist/${id}/${userId}`, {},
-                    {
-                        headers: {
-                            "Authorization": `Bearer ${localStorage.getItem('token')}`
-                        }
+       
+        try {
+            const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/wishlist/${id}/${userId}`, {},
+                {
+                    headers: {
+                        "Authorization": `Bearer ${localStorage.getItem('token')}`
                     }
-                )
-
-                if (response.data.success) {
-                    if (response.data.message.toLowerCase().includes("removed")) {
-                        toast.info(response.data.message);
-                    } else {
-                        toast.success(response.data.message);
-                    }
-                    setProducts((prevProducts) =>
-                        prevProducts.map((prd) =>
-                            prd._id === id ? { ...prd, isWishlisted: !prd.isWishlisted } : prd
-                        )
-                    );
                 }
+            )
 
-
-            } catch (error) {
-                if (error.response && !error.response.data.success) {
-                    alert(error.response.data.error)
+            if (response.data.success) {
+                if (response.data.message.toLowerCase().includes("removed")) {
+                    toast.info(response.data.message);
+                } else {
+                    toast.success(response.data.message);
                 }
+                setProducts((prevProducts) =>
+                    prevProducts.map((prd) =>
+                        prd._id === id ? { ...prd, isWishlisted: !prd.isWishlisted } : prd
+                    )
+                );
             }
-        } else {
-            navigate('/login')
+
+
+        } catch (error) {
+            if (error.response && !error.response.data.success) {
+                alert(error.response.data.error)
+            }
         }
+
 
     }
 

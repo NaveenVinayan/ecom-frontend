@@ -57,7 +57,8 @@ const ProductDetail = () => {
   const handleWishlist = async (e, id, userId) => {
     e.preventDefault()
     if (!user) {
-      navigate('/login')
+      toast.error('Login to add items to wishlist');
+      return;
     }
 
     try {
@@ -103,7 +104,13 @@ const ProductDetail = () => {
             {/* wishlist button */}
             <div className="absolute right-2 sm:right-4 md:right-6">
               <button
-                onClick={(e) => handleWishlist(e, id, user._id)}
+                onClick={(e) => {
+                  if (user) {
+                    handleWishlist(e, id, user._id); 
+                  } else {
+                    toast.error('Login to add items to wishlist');
+                  }
+                }}
                 className={`
             text-3xl sm:text-4xl md:text-5xl 
             px-1 sm:px-2 md:px-2 

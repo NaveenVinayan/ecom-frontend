@@ -36,7 +36,7 @@ const AddProduct = () => {
                 }
             })
             if (response.data.success) {
-                navigate("/admin-dashboard")
+                navigate("/admin-dashboard/view-products")
             }
 
         } catch (error) {
