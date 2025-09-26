@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 const Footer = () => {
     const navigate = useNavigate();
     return (
-        <footer className="bg-gray-900 text-gray-200 py-10">
+        <footer className="bg-gray-900 text-gray-200 py-10 bottom-0">
             <div className="container mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8">
                 {/* About Section */}
                 <div>

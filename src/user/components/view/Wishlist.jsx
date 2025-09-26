@@ -6,11 +6,13 @@ import { useState } from "react";
 import { useAuth } from "../../../context/authContext";
 import Loading from "../../../utils/Loading";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Wishlist = () => {
     const [products, setProducts] = useState([])
     const [loading, setLoading] = useState(false)
     const { user } = useAuth()
+    const navigate = useNavigate()
 
 
     const fetchWishProducts = async () => {

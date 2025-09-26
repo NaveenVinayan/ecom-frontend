@@ -66,7 +66,7 @@ const EditProduct = () => {
                 }
             })
             if (response.data.success) {
-                navigate("/admin-dashboard")
+                navigate("/admin-dashboard/view-products")
             }
             setLoading(false)
         } catch (error) {

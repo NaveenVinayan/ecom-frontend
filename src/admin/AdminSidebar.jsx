@@ -45,6 +45,16 @@ const AdminSidebar = ({ isOpen, onClose }) => {
             } end
           >
             <FaCalendarAlt />
+            <span>Dashboard</span>
+          </NavLink>
+
+          <NavLink
+            to="/admin-dashboard/view-products"
+            className={({ isActive }) =>
+              `${isActive ? "bg-teal-500" : ""} flex items-center space-x-3 py-2.5 px-3 rounded hover:bg-teal-600`
+            }
+          >
+            <FaUsers />
             <span>Products</span>
           </NavLink>
 

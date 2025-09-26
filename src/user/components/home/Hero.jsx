@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom'
 import LatestArrivals from './components/LatestArrivals'
 import Attribute from './components/Attribute'
 import TopSeller from './components/TopSeller'
-import Footer from './components/Footer'
 
 const Hero = () => {
     const navigate = useNavigate()
@@ -54,9 +53,7 @@ const Hero = () => {
                     <TopSeller />
                 </div>
             </div>
-            <div>
-                <Footer />
-            </div>
+            
 
         </div>
     )

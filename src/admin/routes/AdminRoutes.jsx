@@ -11,6 +11,7 @@ import Settings from '../Settings'
 import EditProduct from '../EditProduct'
 import AddProduct from '../AddProduct'
 import OrderDetail from '../OrderDetail'
+import Dashboard from '../Dashboard'
 
 
 const AdminRoutes = () => { 
@@ -25,7 +26,9 @@ const AdminRoutes = () => {
 
 
         }>
-          <Route index element={<ProductView />}></Route> 
+          <Route index element={<Dashboard />}></Route> 
+          <Route path='view-products' element={<ProductView />}></Route>
+
 
           <Route path='edit-product/:id'  element={<EditProduct />}></Route>  
           <Route path='add-product'  element={<AddProduct />}></Route>  

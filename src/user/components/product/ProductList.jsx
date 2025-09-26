@@ -110,9 +110,20 @@ const ProductList = () => {
           } else {
             toast.success(response.data.message);
           }
+          setProducts((prevProducts) =>
+            prevProducts.map((prd) =>
+              prd._id === id ? { ...prd, isWishlisted: !prd.isWishlisted } : prd
+            )
+          );
+
+          setFilteredProduct((prevProducts) =>
+            prevProducts.map((prd) =>
+              prd._id === id ? { ...prd, isWishlisted: !prd.isWishlisted } : prd
+            )
+          );
         }
 
-        fetchProducts()
+
       } catch (error) {
         if (error.response && !error.response.data.success) {
           alert(error.response.data.error)
@@ -181,7 +192,7 @@ const ProductList = () => {
                     }}
 
                     onClick={(e) => {
-                      e.stopPropagation(); 
+                      e.stopPropagation();
                       if (user) {
                         handleWishlist(e, prd._id, user._id);
                       } else {
