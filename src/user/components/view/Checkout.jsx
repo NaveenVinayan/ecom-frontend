@@ -35,7 +35,7 @@ const Checkout = () => {
         }
       })
       if (response.data.success) {
-        navigate(`/user-home/orders`)
+        navigate(`/home/orders`)
       }
     } catch (error) {
       if (error.response && !error.response.data.success) {

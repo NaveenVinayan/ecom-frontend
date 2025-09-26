@@ -137,7 +137,7 @@ const AccountDetails = () => {
 
                             {/* Save Button */}
                             <div className="flex justify-start gap-4">
-                                <button onClick={() => navigate('/user-home/edit-account')} className="px-6 py-2 bg-red-500 text-white rounded hover:bg-red-600">
+                                <button onClick={() => navigate('/home/edit-account')} className="px-6 py-2 bg-red-500 text-white rounded hover:bg-red-600">
                                     Edit Account Details
                                 </button>
                                 <button onClick={logout} className="px-6 py-2 bg-red-500 text-white rounded hover:bg-red-600">

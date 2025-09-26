@@ -108,7 +108,7 @@ const LatestArrivals = () => {
                         <SwiperSlide key={prd._id} className="">
                             <div className=" overflow-hidden duration-300 ease-in-out hover:scale-95">
                                 <img
-                                    onClick={() => navigate(`/user-home/products-list/detail/${prd._id}`)}
+                                    onClick={() => navigate(`/home/products-list/detail/${prd._id}`)}
                                     className="w-64 h-64 sm:w-72 sm:h-72 md:w-80 md:h-80 lg:w-96 lg:h-96 object-cover duration-300 ease-in-out hover:scale-110 cursor-pointer" src={prd.productImage}
                                     alt={prd.name}
                                 />
@@ -116,7 +116,7 @@ const LatestArrivals = () => {
                             <div className="py-4">
                                 <div className="flex">
                                     <div
-                                        onClick={() => navigate(`/user-home/products-list/detail/${prd._id}`)}
+                                        onClick={() => navigate(`/home/products-list/detail/${prd._id}`)}
                                         className="font-semi-bold text-xl mb-2 group uppercase cursor-pointer"
 
                                     >
@@ -127,7 +127,7 @@ const LatestArrivals = () => {
                                 <p className="text-gray-700 text-base pb-4">{prd.description}</p>
                                 <div className="flex">
                                     <div className="group font-normal text-lg mb-2 cursor-pointer"
-                                        onClick={() => navigate(`/user-home/products-list/detail/${prd._id}`)}
+                                        onClick={() => navigate(`/home/products-list/detail/${prd._id}`)}
                                     >
                                         DISCOVER
                                         <div className="bg-gray-900 h-[1px] w-full"></div>

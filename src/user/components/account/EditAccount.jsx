@@ -71,7 +71,7 @@ const AccountDetails = () => {
             })
             if (response.data.success) {
                 alert("Profile updated successfully")
-                navigate("/user-home/account-details")
+                navigate("/home/account-details")
             }
         } catch (error) {
             if (error.response && !error.response.data.success) {
@@ -188,7 +188,7 @@ const AccountDetails = () => {
                             <button type='submit' className="px-6 py-2 bg-red-500 text-white rounded hover:bg-red-600">
                                 Save
                             </button>
-                            <button type='button' onClick={() => navigate('/user-home/account-details')} className="px-6 py-2 bg-slate-500 text-white rounded hover:bg-slate-600">
+                            <button type='button' onClick={() => navigate('/home/account-details')} className="px-6 py-2 bg-slate-500 text-white rounded hover:bg-slate-600">
                                 Cancel
                             </button>
                         </div>

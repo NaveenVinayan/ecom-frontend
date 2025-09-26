@@ -7,12 +7,13 @@ const UserNavbar = () => {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
 
+
   return (
     <div className="bg-slate-950 text-gray-200 shadow-md h-20 sticky top-0 z-50">
       <nav className="flex items-center justify-between h-20 px-6 ">
         {/* Logo */}
         <div
-          onClick={() => navigate("/user-home")}
+          onClick={() => navigate("/home")}
           className="font-bold text-gray-300 text-3xl cursor-pointer"
         >
           eCart
@@ -21,7 +22,7 @@ const UserNavbar = () => {
         {/* Desktop Menu */}
         <div className="hidden md:flex space-x-6">
           <button
-            onClick={() => navigate("/user-home")}
+            onClick={() => navigate("/home")}
             className="uppercase group transition duration-300 hover:text-purple-400"
           >
             HOME
@@ -29,7 +30,7 @@ const UserNavbar = () => {
           </button>
 
           <button
-            onClick={() => navigate("/user-home/products-list")}
+            onClick={() => navigate("/home/products-list")}
             className="uppercase group transition duration-300 hover:text-purple-400"
           >
             PRODUCTS
@@ -37,7 +38,7 @@ const UserNavbar = () => {
           </button>
 
           <button
-            onClick={() => navigate("/user-home/orders")}
+            onClick={() => navigate("/home/orders")}
             className="uppercase group transition duration-300 hover:text-purple-400"
           >
             ORDERS
@@ -45,7 +46,15 @@ const UserNavbar = () => {
           </button>
 
           <button
-            onClick={() => navigate("/user-home/account-details")}
+            onClick={() => navigate("/home/wishlist")}
+            className="uppercase group transition duration-300 hover:text-purple-400"
+          >
+            WISHLIST
+            <span className="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-purple-400"></span>
+          </button>
+
+          <button
+            onClick={() => navigate("/home/account-details")}
             className="group transition duration-300 hover:text-purple-400"
           >
             <div className="p-2 rounded-full bg-white text-black">
@@ -67,7 +76,7 @@ const UserNavbar = () => {
         <div className="md:hidden bg-slate-900 text-center space-y-4 py-4">
           <button
             onClick={() => {
-              navigate("/user-home");
+              navigate("/home");
               setOpen(false);
             }}
             className="block w-full uppercase py-2 hover:text-purple-400 transition"
@@ -77,7 +86,7 @@ const UserNavbar = () => {
 
           <button
             onClick={() => {
-              navigate("/user-home/products-list");
+              navigate("/home/products-list");
               setOpen(false);
             }}
             className="block w-full uppercase py-2 hover:text-purple-400 transition"
@@ -87,7 +96,7 @@ const UserNavbar = () => {
 
           <button
             onClick={() => {
-              navigate("/user-home/orders");
+              navigate("/home/orders");
               setOpen(false);
             }}
             className="block w-full uppercase py-2 hover:text-purple-400 transition"
@@ -97,7 +106,7 @@ const UserNavbar = () => {
 
           <button
             onClick={() => {
-              navigate("/user-home/account-details");
+              navigate("/home/account-details");
               setOpen(false);
             }}
             className="block w-full uppercase py-2 hover:text-purple-400 transition"

@@ -12,11 +12,11 @@ function App() {
     <Router>
       <Routes>
 
-        <Route path='/' element={<Navigate to={'/user-home'} />}></Route>
+        <Route path='/' element={<Navigate to={'/home'} />}></Route>
         <Route path='/login' element={<Login/>}></Route>
         <Route path='/register' element={<Register />}></Route>
 
-        <Route path='/user-home/*' element={<UserRoutes />}></Route>
+        <Route path='/home/*' element={<UserRoutes />}></Route>
         <Route path='/admin-dashboard/*' element={<AdminRoutes />}></Route> 
       
 

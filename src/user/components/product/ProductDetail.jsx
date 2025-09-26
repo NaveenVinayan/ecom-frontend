@@ -1,6 +1,10 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { CiBookmark } from "react-icons/ci";
+import { useAuth } from "../../../context/authContext"
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const ProductDetail = () => {
   const [product, setProduct] = useState([])
@@ -8,17 +12,53 @@ const ProductDetail = () => {
 
   const navigate = useNavigate();
   const { id } = useParams()
+  const { user } = useAuth()
+
+  const fetchProduct = async () => {
+    setLoading(true)
+    try {
+      const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/product/${id}`)
+
+      if (response.data.success) {
+        setProduct(response.data.product)
+
+      }
+
+
+    } catch (error) {
+      if (error.response && !error.response.data.success) {
+        alert(error.response.data.error)
+      }
+    } finally {
+      setLoading(false)
+    }
+  }
 
 
   useEffect(() => {
-    const fetchProduct = async () => {
-      setLoading(true)
+
+    fetchProduct()
+  }, [])
+
+  const handleWishlist = async (e, id, userId) => {
+    e.preventDefault()
+    if (user) {
       try {
-        const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/product/${id}`)
+        const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/wishlist/${id}/${userId}`, {},
+          {
+            headers: {
+              "Authorization": `Bearer ${localStorage.getItem('token')}`
+            }
+          }
+        )
 
         if (response.data.success) {
-          setProduct(response.data.product)
 
+          if (response.data.message.toLowerCase().includes("removed")) {
+            toast.info(response.data.message);
+          } else {
+            toast.success(response.data.message);
+          }
         }
 
 
@@ -26,34 +66,35 @@ const ProductDetail = () => {
         if (error.response && !error.response.data.success) {
           alert(error.response.data.error)
         }
-      } finally {
-        setLoading(false)
       }
+    } else {
+      navigate('/login')
     }
-    fetchProduct()
-  }, [])
+    fetchProduct();
+
+  }
 
   return (
     <>{loading ? (
       <div className="flex items-center justify-center min-h-screen">
-      <div role="status">
-        <svg
-          aria-hidden="true"
-          className="w-12 h-12 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
-          viewBox="0 0 100 101"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 
+        <div role="status">
+          <svg
+            aria-hidden="true"
+            className="w-12 h-12 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+            viewBox="0 0 100 101"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 
         0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 
         100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 
         91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 
         50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
-            fill="currentColor"
-          />
-          <path
-            d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 
+              fill="currentColor"
+            />
+            <path
+              d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 
         97.0079 33.5539C95.2932 28.8227 92.871 
         24.3692 89.8167 20.348C85.8452 15.1192 
         80.8826 10.7238 75.2124 7.41289C69.5422 
@@ -68,64 +109,92 @@ const ProductDetail = () => {
         25.841C84.9175 28.9121 86.7997 32.2913 
         88.1811 35.8758C89.083 38.2158 91.5421 
         39.6781 93.9676 39.0409Z"
-            fill="currentFill"
-          />
-        </svg>
-        <span className="sr-only">Loading...</span>
+              fill="currentFill"
+            />
+          </svg>
+          <span className="sr-only">Loading...</span>
+        </div>
       </div>
-    </div>
     ) : (
-    <div className="max-w-6xl mx-auto p-6 grid grid-cols-1 md:grid-cols-2 gap-12">
+      <div className="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-12">
         {/* Product Image Section */}
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col items-center relative">
+          {/* wishlist button */}
+          <div className="absolute right-2  sm:right-4  md:right-6 ">
+            <button
+              onClick={(e) => handleWishlist(e, id, user._id)}
+              className="bg-white text-black 
+               text-3xl sm:text-4xl md:text-5xl 
+               py-2 sm:py-3 md:py-4 
+               px-1 sm:px-2 md:px-2 
+               rounded-b-2xl shadow-lg
+               transition-all duration-300 ease-in-out
+               hover:pt-6 hover:bg-slate-900 hover:text-white"
+            >
+              <CiBookmark />
+            </button>
+          </div>
+
+
           <img
             src={`${import.meta.env.VITE_API_BASE_URL}/${product.productImage}`}
             alt={`${import.meta.env.VITE_API_BASE_URL}/${product.productImage}`}
-            className="rounded-lg shadow-lg w-full max-w-md object-cover"
+            className="rounded-b-lg shadow-lg w-full max-w-md object-cover"
           />
 
         </div>
 
         {/* Product Info Section */}
-        <div>
-          <h1 className="text-4xl font-bold mb-3">{product.name}</h1>
+        <div className="py-2 sm:py-4 md:py-6">
+          {/* Title */}
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3">
+            {product.name}
+          </h1>
 
           {/* Reviews */}
-          <div className="flex items-center gap-2 mb-4">
-            <p className="text-black text-lg">★★★★☆</p>
-            <span className="text-gray-600 text-sm">(120 reviews)</span>
+          <div className="flex items-center gap-2 mb-3 sm:mb-4">
+            <p className="text-black text-base sm:text-lg">★★★★☆</p>
+            <span className="text-gray-600 text-xs sm:text-sm">
+              (120 reviews)
+            </span>
           </div>
 
           {/* Price */}
-          <div className="text-3xl font-extrabold text-blue-600 mb-6">
+          <div className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-blue-600 mb-4 sm:mb-6">
             ₹{product.price}
           </div>
 
           {/* Short Description */}
-          <p className="text-gray-700 mb-6 leading-relaxed">
+          <p className="text-gray-700 mb-4 sm:mb-6 leading-relaxed text-sm sm:text-base md:text-lg">
             {product.description}
           </p>
 
           {/* Action Buttons */}
-          <div className="flex gap-4 mb-8">
+          <div className="flex gap-3 sm:gap-4 mb-6 sm:mb-8">
             <button
-              onClick={() => navigate(`/user-home/detail/checkout/${id}`)}
-              className="px-6 py-3 bg-blue-600 text-white font-medium rounded-lg shadow hover:bg-blue-700 transition"
+              onClick={() => navigate(`/home/detail/checkout/${id}`)}
+              className="px-4 sm:px-6 py-2 sm:py-3 
+                 bg-blue-600 text-white font-medium 
+                 rounded-lg shadow 
+                 hover:bg-blue-700 transition text-sm sm:text-base"
             >
               Buy Now
             </button>
           </div>
 
           {/* Extra Info */}
-          <div className="space-y-3 text-gray-700 text-sm">
+          <div className="space-y-2 sm:space-y-3 text-gray-700 text-xs sm:text-sm md:text-base">
             <p>✔ Free Shipping across India</p>
             <p>✔ 7 Days Easy Returns & Refund</p>
-            <p>✔ 1 Year  Warranty</p>
+            <p>✔ 1 Year Warranty</p>
             <p>✔ Exchange Available</p>
           </div>
         </div>
+
+
       </div>
-    )} </>
+    )}
+    </>
   );
 };
 

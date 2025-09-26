@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/authContext'
+import { IoMdHome } from "react-icons/io";
 
 const Login = () => {
     const [email, setEmail] = useState("")
@@ -15,8 +16,6 @@ const Login = () => {
         e.preventDefault()
         try {
             setLoading(true)
-            console.log("API Base URL:", import.meta.env.VITE_API_BASE_URL);
- 
             const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/auth/login`, { email, password })
             if (response.data.success) {
                 login(response.data.user)
@@ -25,7 +24,7 @@ const Login = () => {
                 if (response.data.user.role === "admin") {
                     navigate('/admin-dashboard')
                 } else {
-                    navigate('/user-home')
+                    navigate('/home')
                 }
             }
             setLoading(false)
@@ -128,6 +127,15 @@ const Login = () => {
                                         </div>
                                     </div>
                                 </form>
+                            </div>
+                            <div className='flex justify-center'>
+                                <button 
+                                type="button" 
+                                onClick={()=> navigate('/')}
+                                className="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-900 shadow-2xs hover:bg-gray-100">
+                                    <span>Go To Home Page</span>
+                                    <IoMdHome className='text-lg' /> 
+                                </button>
                             </div>
                         </div>
                     </div>

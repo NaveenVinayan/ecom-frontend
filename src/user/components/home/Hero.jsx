@@ -36,7 +36,7 @@ const Hero = () => {
 
                         <div className="mt-8">
                             <button
-                                onClick={() => navigate('/user-home/products-list')}
+                                onClick={() => navigate('/home/products-list')}
                                 className="bg-purple-500 text-slate-900 font-semibold px-8 py-3 rounded-full shadow-lg hover:bg-purple-400 hover:scale-105 transition-transform duration-300"
                             >
                                 Shop Now

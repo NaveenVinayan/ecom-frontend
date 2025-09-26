@@ -30,7 +30,7 @@ const Register = () => {
                     if (response.data.user.role === "admin") {
                         navigate('/admin-dashboard')
                     } else {
-                        navigate('/user-home')
+                        navigate('/home')
                     }
                 }
 

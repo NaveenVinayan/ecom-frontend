@@ -3,12 +3,16 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
+import { CiHeart } from "react-icons/ci";
+import { FaHeart } from "react-icons/fa";
 import "swiper/css";
 import "swiper/css/navigation";
+import { useAuth } from "../../../../context/authContext";
 
 const TopSeller = () => {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(false);
+
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -48,8 +52,12 @@ const TopSeller = () => {
                 setLoading(false);
             }
         };
+
+
         fetchProducts();
     }, []);
+
+
 
     return (
         <div className="lg:px-25 px-10 pb-20 bg-white text-black">
@@ -58,7 +66,7 @@ const TopSeller = () => {
                 <h1 className="text-2xl md:text-4xl ">BEST SELLING ITEMS</h1>
                 <div className="content-end">
                     <button
-                        onClick={() => navigate("/user-home/products-list")}
+                        onClick={() => navigate("/home/products-list")}
                         className="text-md md:text-lg underline hover:text-purple-600 transition-colors"
                     >
                         VIEW ALL PRODUCTS
@@ -76,6 +84,7 @@ const TopSeller = () => {
                     navigation
                     spaceBetween={30}
                     breakpoints={{
+
                         320: {
                             slidesPerView: 1,
                             // Only center slides if there's more than one slide
@@ -99,26 +108,19 @@ const TopSeller = () => {
                     {products.map((item) => (
                         <SwiperSlide key={item._id}>
                             <div className="duration-300 ease-in-out hover:scale-95 group relative">
-                                {/* Wishlist Icon */}
-                                <div
-                                    className="bg-white text-black p-1 py-2 m-2 absolute end-0 opacity-0 transition-all 
-                  duration-500 group-hover:opacity-100 z-10"
-                                >
-                                    <i className="bi bi-heart text-lg py-5 px-1"></i>
-                                </div>
 
                                 {/* Image */}
-                                <div className="mb-4 overflow-hidden w-full h">
+                                <div className="mb-4 overflow-hidden relative">
                                     <img
-                                        onClick={() => navigate(`/user-home/products-list/detail/${item._id}`)}
-                                        className="w-64 h-64 sm:w-72 sm:h-72 md:w-80 md:h-80 lg:w-96 lg:h-96 object-cover duration-300 ease-in-out group-hover:scale-110 cursor-pointer" src={item.productImage}
+                                        onClick={() => navigate(`/home/products-list/detail/${item._id}`)}
+                                        className=" w-64 h-64 sm:w-72 sm:h-72 md:w-80 md:h-80 lg:w-96 lg:h-96 object-cover duration-300 ease-in-out group-hover:scale-110 cursor-pointer" src={item.productImage}
                                         alt={item.name}
                                     />
                                 </div>
 
                                 {/* Title */}
                                 <div
-                                    onClick={() => navigate(`/user-home/products-list/detail/${item._id}`)}
+                                    onClick={() => navigate(`/home/products-list/detail/${item._id}`)}
                                     className="text-xl mb-3">
                                     {item.name}
                                 </div>
@@ -131,7 +133,7 @@ const TopSeller = () => {
                                     <div className="transition-all duration-500 group-hover:-translate-y-8">
                                         <div>${item.price}</div>
                                         <div
-                                            onClick={() => navigate(`/user-home/products-list/detail/${item._id}`)}
+                                            onClick={() => navigate(`/home/products-list/detail/${item._id}`)}
                                             className="cursor-pointer"
                                         >
                                             Buy Now

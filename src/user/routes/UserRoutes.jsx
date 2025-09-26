@@ -10,6 +10,7 @@ import AccountDetails from '../components/account/AccountDetails'
 import EditAccount from '../components/account/EditAccount'
 import Checkout from '../components/view/Checkout'
 import UserOrders from '../components/view/UserOrders'
+import Wishlist from '../components/view/Wishlist'
 
 
 
@@ -36,6 +37,7 @@ const UserRoutes = () => {
         <Route path='/account-details' element={<AccountDetails />}></Route>
         <Route path='/edit-account' element={<EditAccount />}></Route>
         <Route path='/orders' element={<UserOrders />}></Route>
+        <Route path='/wishlist' element={<Wishlist />}></Route>
 
 
       </Route>

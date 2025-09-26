@@ -154,7 +154,7 @@ const Userorders = () => {
                       <img
                         src={order.productImage}
                         alt={order.productName}
-                        onClick={() => navigate(`/user-home/products-list/detail/${order.productId}`)}
+                        onClick={() => navigate(`/home/products-list/detail/${order.productId}`)}
                         className="w-28 h-28 object-cover rounded-md border"
                       />
                     </div>
@@ -214,7 +214,7 @@ const Userorders = () => {
 
                   <div
 
-                    className="text-center text-gray-500 py-4 border border-gray-300"
+                    className="text-center text-gray-500 py-4 border border-gray-300 w-full"
                   >
                     No orders found.
                   </div>

@@ -10,6 +10,9 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect } from "react";
 import { useState } from "react";
 import axios from "axios";
+import { useAuth } from '../../../context/authContext';
+import { toast, ToastContainer } from "react-toastify";
+
 
 const ProductList = () => {
   const [products, setProducts] = useState([])
@@ -19,7 +22,8 @@ const ProductList = () => {
   // Pagination states
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 20;
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
+  const { user } = useAuth()
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -70,6 +74,38 @@ const ProductList = () => {
     startIndex,
     startIndex + itemsPerPage
   );
+
+  const handleWishlist = async (e, id, userId) => {
+    e.preventDefault()
+    if (user) {
+      try {
+        const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/wishlist/${id}/${userId}`, {},
+          {
+            headers: {
+              "Authorization": `Bearer ${localStorage.getItem('token')}`
+            }
+          }
+        )
+
+        if (response.data.success) {
+          if (response.data.message.toLowerCase().includes("removed")) {
+            toast.info(response.data.message);
+          } else {
+            toast.success(response.data.message);
+          }
+        }
+
+
+      } catch (error) {
+        if (error.response && !error.response.data.success) {
+          alert(error.response.data.error)
+        }
+      }
+    } else {
+      navigate('/login')
+    }
+
+  }
 
 
   return (
@@ -129,14 +165,38 @@ const ProductList = () => {
 
             <div className="flex flex-wrap gap-6 p-6">
               {currentItems.map((prd) => (
-                <Card key={prd._id} sx={{ width: 300, cursor: "pointer", transition: "0.3s", "&:hover": { boxShadow: "lg" } }} onClick={() => navigate(`/user-home/products-list/detail/${prd._id}`)}>
-                  {/* Wishlist / Favorite Button */}
+                <Card key={prd._id}
+                  sx={{ width: 300, cursor: "pointer", transition: "0.3s", position: "relative", "&:hover": { boxShadow: "lg" }, "&:hover .wishlist-btn": { opacity: 1, transform: "translateY(0)" } }}
+                  onClick={() => navigate(`/home/products-list/detail/${prd._id}`)}>
+                  {/* ❤️ Wishlist Button */}
                   <IconButton
+                    className="wishlist-btn"
                     aria-label="add to wishlist"
-                    variant="plain"
-                    color="neutral"
+                    variant="soft"
+                    color="black"
                     size="sm"
-                    sx={{ position: 'absolute', top: '0.75rem', right: '0.75rem' }}
+                    sx={{
+                      position: 'absolute',
+                      top: '0.75rem',
+                      right: '0.75rem',
+                      zIndex: 10,
+                      opacity: 0, // 👈 hidden by default
+                      transform: "translateY(-10px)", // slide-down effect
+                      transition: "all 0.3s ease",
+                      backgroundColor: 'white',
+                      borderRadius: '50%',
+                      boxShadow: '0 2px 6px rgba(0,0,0,0.15)',
+                      '&:hover': {
+                        backgroundColor: '#f87171',
+                        color: 'white',
+                        transform: 'scale(1.1)',
+                        boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
+                      },
+                    }}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleWishlist(e, prd._id, user._id);
+                    }}
                   >
                     <FavoriteBorderIcon />
                   </IconButton>

@@ -21,7 +21,7 @@ const Footer = () => {
                     <ul className="space-y-2">
                         <li>
                             <button
-                                onClick={() => navigate('/user-home')}
+                                onClick={() => navigate('/home')}
                                 className="group transition duration-300"
                             >Home
                                 <span className="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-gray-100"></span>
@@ -29,7 +29,7 @@ const Footer = () => {
                         </li>
                         <li>
                             <button
-                                onClick={() => navigate('/user-home/products-list')}
+                                onClick={() => navigate('/home/products-list')}
                                 className="group transition duration-300"
                             >Products
                             <span className="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-gray-100"></span>
@@ -37,7 +37,7 @@ const Footer = () => {
                         </li>
                         <li>
                             <button
-                                onClick={() => navigate('/user-home/orders')}
+                                onClick={() => navigate('/home/orders')}
                                 className="group transition duration-300"
                             >Orders
                             <span className="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-gray-100"></span>
@@ -45,7 +45,7 @@ const Footer = () => {
                         </li>
                         <li>
                             <button
-                                onClick={() => navigate('/user-home/account-details')}
+                                onClick={() => navigate('/home/account-details')}
                                 className="group transition duration-300"
                             >Account
                             <span className="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-gray-100"></span>
