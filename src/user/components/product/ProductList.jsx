@@ -193,7 +193,7 @@ const ProductList = () => {
 
                   <div
 
-                    className="text-center text-gray-500 py-4 border border-gray-300"
+                    className="text-center text-gray-500 py-4 border border-gray-300 w-full"
                   >
                     No products found.
                   </div>
