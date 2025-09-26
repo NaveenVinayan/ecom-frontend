@@ -22,42 +22,58 @@ const ProductList = () => {
 
   // Pagination states
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 20;
+  const itemsPerPage = 10;
   const navigate = useNavigate();
   const { user } = useAuth()
 
-  useEffect(() => {
-    const fetchProducts = async () => {
-      setLoading(true)
-      try {
-        const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/product`)
+  const fetchProducts = async () => {
+    setLoading(true)
+    try {
+      const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/product`)
 
-        if (response.data.success) {
+      if (response.data.success) {
 
-          const data = await response.data.products.map((prd) => (
-            {
-              _id: prd._id,
-              name: prd.name,
-              productImage: `${import.meta.env.VITE_API_BASE_URL}/${prd.productImage}`,
-              description: prd.description,
-              price: prd.price
+        let data = await response.data.products.map((prd) => (
+          {
+            _id: prd._id,
+            name: prd.name,
+            productImage: `${import.meta.env.VITE_API_BASE_URL}/${prd.productImage}`,
+            description: prd.description,
+            price: prd.price,
+            isWishlisted: false,
 
-            }
-          ));
+          }
+        ));
 
-          setProducts(data)
-          setFilteredProduct(data)
+        if (user) {
+          const wishRes = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/wishlist/${user._id}`, {
+            headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
+          });
+          const wishIds = wishRes.data.products.map((w) => w.productId._id);
+
+          // 3️⃣ Mark wishlist items
+          data = data.map((prd) => ({
+            ...prd,
+            isWishlisted: wishIds.includes(prd._id),
+          }));
         }
 
-
-      } catch (error) {
-        if (error.response && !error.response.data.success) {
-          alert(error.response.data.error)
-        }
-      } finally {
-        setLoading(false);
+        setProducts(data)
+        setFilteredProduct(data)
       }
+
+
+    } catch (error) {
+      if (error.response && !error.response.data.success) {
+        alert(error.response.data.error)
+      }
+    } finally {
+      setLoading(false);
     }
+  }
+
+  useEffect(() => {
+
     fetchProducts()
   }, [])
 
@@ -96,7 +112,7 @@ const ProductList = () => {
           }
         }
 
-
+        fetchProducts()
       } catch (error) {
         if (error.response && !error.response.data.success) {
           alert(error.response.data.error)
@@ -113,7 +129,7 @@ const ProductList = () => {
     <>
       {loading ?
         (
-          <Loading/>
+          <Loading />
         ) : (
           <div>
             <div className="px-6 pt-2">
@@ -129,39 +145,41 @@ const ProductList = () => {
             <div className="flex flex-wrap gap-6 p-6">
               {currentItems.map((prd) => (
                 <Card key={prd._id}
-                  sx={{ 
-                    width: 275,   
-                    cursor: "pointer", 
-                    transition: "0.3s", 
+                  sx={{
+                    width: 275,
+                    cursor: "pointer",
+                    transition: "0.3s",
                     position: "relative",
-                     "&:hover": { boxShadow: "lg" }, 
-                     "&:hover .wishlist-btn": { opacity: 1, transform: "translateY(0)" } }}
+                    "&:hover": { boxShadow: "lg" },
+                    "&:hover .wishlist-btn": { opacity: 1, transform: "translateY(0)" }
+                  }}
                   onClick={() => navigate(`/home/products-list/detail/${prd._id}`)}>
                   {/* ❤️ Wishlist Button */}
                   <IconButton
-                    className="wishlist-btn"
                     aria-label="add to wishlist"
                     variant="soft"
-                    color="black"
                     size="sm"
                     sx={{
+                      backgroundColor: prd.isWishlisted ? '#ef4444' : 'white',
+                      color: prd.isWishlisted ? 'white' : 'black',
+                      transform: prd.isWishlisted ? 'scale(1)' : 'translateY(-10px)',
+                      opacity: prd.isWishlisted ? 1 : 0,
                       position: 'absolute',
                       top: '0.75rem',
                       right: '0.75rem',
                       zIndex: 10,
-                      opacity: 0, // 👈 hidden by default
-                      transform: "translateY(-10px)", // slide-down effect
-                      transition: "all 0.3s ease",
-                      backgroundColor: 'white',
                       borderRadius: '50%',
                       boxShadow: '0 2px 6px rgba(0,0,0,0.15)',
+                      transition: 'all 0.3s ease',
                       '&:hover': {
                         backgroundColor: '#f87171',
                         color: 'white',
                         transform: 'scale(1.1)',
                         boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
                       },
+                      '.MuiCard-root:hover &': prd.isWishlisted ? {} : { opacity: 1, transform: 'translateY(0)' },
                     }}
+
                     onClick={(e) => {
                       e.stopPropagation();
                       handleWishlist(e, prd._id, user._id);
@@ -169,6 +187,8 @@ const ProductList = () => {
                   >
                     <FavoriteBorderIcon />
                   </IconButton>
+
+
 
                   {/* Product Image */}
                   <AspectRatio minHeight="270px" maxHeight="270px">
