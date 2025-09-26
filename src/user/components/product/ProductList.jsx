@@ -181,8 +181,13 @@ const ProductList = () => {
                     }}
 
                     onClick={(e) => {
-                      e.stopPropagation();
-                      handleWishlist(e, prd._id, user._id);
+                      e.stopPropagation(); 
+                      if (user) {
+                        handleWishlist(e, prd._id, user._id);
+                      } else {
+                        toast.error('Login to add items to wishlist');
+                      }
+
                     }}
                   >
                     <FavoriteBorderIcon />
