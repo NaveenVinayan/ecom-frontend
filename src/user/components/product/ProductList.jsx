@@ -18,19 +18,20 @@ import Loading from '../../../utils/Loading';
 const ProductList = () => {
   const [products, setProducts] = useState([])
   const [filteredProduct, setFilteredProduct] = useState([])
-  const [loading, setLoading] = useState(false)
+  const [prdLoading, setPrdLoading] = useState(false)
 
   // Pagination states
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
   const navigate = useNavigate();
-  const { user } = useAuth()
+  const { user , loading } = useAuth()
 
 
 
   useEffect(() => {
+    if (loading) return;
     const fetchProducts = async () => {
-      setLoading(true)
+      setPrdLoading(true)
       try {
         const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/product`)
 
@@ -71,12 +72,15 @@ const ProductList = () => {
           alert(error.response.data.error)
         }
       } finally {
-        setLoading(false);
+        setPrdLoading(false);
       }
     }
 
     fetchProducts()
-  }, [user])
+  }, [user,loading])
+
+  console.log(products);
+
 
   const handleFilter = (e) => {
     const records = products.filter((prd) => (
@@ -137,7 +141,7 @@ const ProductList = () => {
 
   return (
     <>
-      {loading ?
+      {prdLoading ?
         (
           <Loading />
         ) : (
@@ -230,7 +234,7 @@ const ProductList = () => {
               ))
               }
               {
-                !loading && filteredProduct.length === 0 && (
+                !prdLoading && filteredProduct.length === 0 && (
 
                   <div
 
