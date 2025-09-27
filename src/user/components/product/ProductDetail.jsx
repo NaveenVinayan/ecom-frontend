@@ -156,7 +156,13 @@ const ProductDetail = () => {
             {/* Action Buttons */}
             <div className="flex gap-3 sm:gap-4 mb-6 sm:mb-8">
               <button
-                onClick={() => navigate(`/home/detail/checkout/${id}`)}
+                onClick={() => {
+                  if (user) {
+                    navigate(`/home/detail/checkout/${id}`)
+                  } else {
+                    toast.error('Login to buy product');
+                  }
+                }}
                 className="px-4 sm:px-6 py-2 sm:py-3 
             bg-blue-600 text-white font-medium 
             rounded-lg shadow 
