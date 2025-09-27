@@ -24,47 +24,46 @@ const ProductList = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
   const navigate = useNavigate();
-  const { user , loading } = useAuth()
+  const { user, } = useAuth()
 
 
 
   useEffect(() => {
-    if (loading) return;
+
     const fetchProducts = async () => {
       setPrdLoading(true)
       try {
         const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/product`)
 
-        if (response.data.success) {
+        if (!response.data.success) { throw new Error("Failed to fetch products"); }
 
-          let data = await response.data.products.map((prd) => (
-            {
-              _id: prd._id,
-              name: prd.name,
-              productImage: `${import.meta.env.VITE_API_BASE_URL}/${prd.productImage}`,
-              description: prd.description,
-              price: prd.price,
-              isWishlisted: false,
+        let data = await response.data.products.map((prd) => (
+          {
+            _id: prd._id,
+            name: prd.name,
+            productImage: `${import.meta.env.VITE_API_BASE_URL}/${prd.productImage}`,
+            description: prd.description,
+            price: prd.price,
+            isWishlisted: false,
 
-            }
-          ));
-
-          if (user) {
-            const wishRes = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/wishlist/${user._id}`, {
-              headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
-            });
-            const wishIds = wishRes.data.products.map((w) => w.productId._id);
-
-            // 3️⃣ Mark wishlist items
-            data = data.map((prd) => ({
-              ...prd,
-              isWishlisted: wishIds.includes(prd._id),
-            }));
           }
+        ));
 
-          setProducts(data)
-          setFilteredProduct(data)
+        if (user) {
+          const wishRes = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/wishlist/${user._id}`, {
+            headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
+          });
+          const wishIds = wishRes.data.products.map((w) => w.productId._id);
+
+          // Mark wishlist items
+          data = data.map((prd) => ({
+            ...prd,
+            isWishlisted: wishIds.includes(prd._id),
+          }));
         }
+
+        setProducts(data)
+        setFilteredProduct(data)
 
 
       } catch (error) {
@@ -77,9 +76,12 @@ const ProductList = () => {
     }
 
     fetchProducts()
-  }, [user,loading])
+  }, [user])
 
   console.log(products);
+
+
+
 
 
   const handleFilter = (e) => {
@@ -168,7 +170,7 @@ const ProductList = () => {
                     "&:hover .wishlist-btn": { opacity: 1, transform: "translateY(0)" }
                   }}
                   onClick={() => navigate(`/home/products-list/detail/${prd._id}`)}>
-                  {/* ❤️ Wishlist Button */}
+                  {/* Wishlist Button */}
                   <IconButton
                     aria-label="add to wishlist"
                     variant="soft"
