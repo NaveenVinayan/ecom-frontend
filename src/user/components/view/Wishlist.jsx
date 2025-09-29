@@ -15,46 +15,47 @@ const Wishlist = () => {
     const navigate = useNavigate()
 
 
-    const fetchWishProducts = async () => {
-        setLoading(true)
 
-        try {
-
-            const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/wishlist/${user._id}`,
-                {
-                    headers: {
-                        "Authorization": `Bearer ${localStorage.getItem('token')}`
-                    }
-                }
-            )
-
-            if (response.data.success) {
-                const data = response.data.products.map((prd) => (
-                    {
-                        _id: prd.productId._id,
-                        name: prd.productId.name,
-                        productImage: `${import.meta.env.VITE_API_BASE_URL}/uploads/${prd.productId.productImage}`,
-                        description: prd.productId.description,
-                        price: prd.productId.price
-
-                    }
-                ));
-
-                setProducts(data)
-
-            }
-
-
-        } catch (error) {
-            if (error.response && !error.response.data.success) {
-                alert(error.response.data.error)
-            }
-        } finally {
-            setLoading(false);
-        }
-    }
 
     useEffect(() => {
+        const fetchWishProducts = async () => {
+            setLoading(true)
+
+            try {
+
+                const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/wishlist/${user._id}`,
+                    {
+                        headers: {
+                            "Authorization": `Bearer ${localStorage.getItem('token')}`
+                        }
+                    }
+                )
+
+                if (response.data.success) {
+                    const data = response.data.products.map((prd) => (
+                        {
+                            _id: prd.productId._id,
+                            name: prd.productId.name,
+                            productImage: `${import.meta.env.VITE_API_BASE_URL}/uploads/${prd.productId.productImage}`,
+                            description: prd.productId.description,
+                            price: prd.productId.price
+
+                        }
+                    ));
+
+                    setProducts(data)
+
+                }
+
+
+            } catch (error) {
+                if (error.response && !error.response.data.success) {
+                    alert(error.response.data.error)
+                }
+            } finally {
+                setLoading(false);
+            }
+        }
 
         fetchWishProducts()
     }, [])
@@ -129,11 +130,11 @@ const Wishlist = () => {
                                             top: '0.75rem',
                                             right: '0.75rem',
                                             zIndex: 10,
-                                            opacity: 1, 
+                                            opacity: 1,
                                             translatey: '-10px',
                                             transition: 'all 0.3s ease',
                                             backgroundColor: '#f87171',
-                                            color: 'white' ,
+                                            color: 'white',
                                             borderRadius: '50%',
                                             boxShadow: '0 2px 6px rgba(0,0,0,0.15)',
                                             '&:hover': {
