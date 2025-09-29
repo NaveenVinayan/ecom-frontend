@@ -123,22 +123,22 @@ const Wishlist = () => {
                                         className="wishlist-btn"
                                         aria-label="add to wishlist"
                                         variant="soft"
-                                        color="black"
                                         size="sm"
                                         sx={{
                                             position: 'absolute',
                                             top: '0.75rem',
                                             right: '0.75rem',
                                             zIndex: 10,
-                                            opacity: 0, // 👈 hidden by default
-                                            transform: "translateY(-10px)", // slide-down effect
-                                            transition: "all 0.3s ease",
-                                            backgroundColor: 'white',
+                                            opacity: 1, 
+                                            translatey: '-10px',
+                                            transition: 'all 0.3s ease',
+                                            backgroundColor: '#f87171',
+                                            color: 'white' ,
                                             borderRadius: '50%',
                                             boxShadow: '0 2px 6px rgba(0,0,0,0.15)',
                                             '&:hover': {
-                                                backgroundColor: '#f87171',
-                                                color: 'white',
+                                                backgroundColor: prd.isWishlisted ? 'white' : '#f87171',
+                                                color: prd.isWishlisted ? '#f87171' : 'white',
                                                 transform: 'scale(1.1)',
                                                 boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
                                             },
@@ -150,6 +150,7 @@ const Wishlist = () => {
                                     >
                                         <FavoriteBorderIcon />
                                     </IconButton>
+
 
                                     {/* Product Image */}
                                     <AspectRatio minHeight="270px" maxHeight="270px">

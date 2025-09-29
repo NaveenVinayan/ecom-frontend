@@ -15,44 +15,62 @@ const ProductDetail = () => {
   const { id } = useParams()
   const { user } = useAuth()
 
-  const fetchProduct = async () => {
-    setLoading(true)
-    try {
-      const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/product/${id}`)
 
-      if (response.data.success) {
-        let productData = {
-          ...response.data.product,
-          isWishlisted: false,
-        }
-
-        if (user) {
-          const wishRes = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/wishlist/${user._id}`, {
-            headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
-          });
-          const wishIds = wishRes.data.products.map((w) => w.productId._id);
-
-          productData.isWishlisted = wishIds.includes(productData._id)
-        }
-        setProduct(productData)
-
-      }
-
-
-    } catch (error) {
-      if (error.response && !error.response.data.success) {
-        alert(error.response.data.error)
-      }
-    } finally {
-      setLoading(false)
-    }
-  }
 
 
   useEffect(() => {
+    const fetchProduct = async () => {
+      setLoading(true)
+      try {
+        const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/product/${id}`)
 
+        if (response.data.success) {
+          let productData = {
+            ...response.data.product,
+            isWishlisted: false,
+          }
+
+          setProduct(productData)
+
+        }
+
+
+      } catch (error) {
+        if (error.response && !error.response.data.success) {
+          alert(error.response.data.error)
+        }
+      } finally {
+        setLoading(false)
+      }
+    }
     fetchProduct()
-  }, [])
+  }, [id])
+
+  useEffect(() => {
+    const fetchWishlistStatus = async () => {
+      if (!user || !product) return;
+      try {
+        const wishRes = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/wishlist/${user._id}`, {
+          headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
+        });
+        const wishIds = wishRes.data.products.map((w) => w.productId._id);
+
+        setProduct((prev) => ({
+          ...prev,
+          isWishlisted: wishIds.includes(prev._id),
+        }));
+
+
+
+      } catch (error) {
+        if (error.response && !error.response.data.success) {
+          alert(error.response.data.error)
+        }
+      }
+    }
+    fetchWishlistStatus()
+
+  }, [user, product?._id])
 
   const handleWishlist = async (e, id, userId) => {
     e.preventDefault()
@@ -106,7 +124,7 @@ const ProductDetail = () => {
               <button
                 onClick={(e) => {
                   if (user) {
-                    handleWishlist(e, id, user._id); 
+                    handleWishlist(e, id, user._id);
                   } else {
                     toast.error('Login to add items to wishlist');
                   }
@@ -126,7 +144,7 @@ const ProductDetail = () => {
             <img
               src={`${import.meta.env.VITE_API_BASE_URL}/${product.productImage}`}
               alt={product.name}
-              className="rounded-b-lg shadow-lg w-full max-w-md object-cover"
+              className=" shadow-lg w-full max-w-md object-cover"
             />
           </div>
 
@@ -173,7 +191,7 @@ const ProductDetail = () => {
             </div>
 
             {/* Extra Info */}
-            <div className="space-y-2 sm:space-y-3 text-gray-700 text-xs sm:text-sm md:text-base">
+            <div className="space-y-2 sm:space-y-3 text-gray-700 text-xs sm:text-sm md:text-base pb-4">
               <p>✔ Free Shipping across India</p>
               <p>✔ 7 Days Easy Returns & Refund</p>
               <p>✔ 1 Year Warranty</p>

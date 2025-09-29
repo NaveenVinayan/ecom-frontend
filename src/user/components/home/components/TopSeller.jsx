@@ -68,7 +68,7 @@ const TopSeller = () => {
 
     const handleWishlist = async (e, id, userId) => {
         e.preventDefault()
-       
+
         try {
             const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/wishlist/${id}/${userId}`, {},
                 {
@@ -109,9 +109,10 @@ const TopSeller = () => {
                 <div className="content-end">
                     <button
                         onClick={() => navigate("/home/products-list")}
-                        className="text-md md:text-lg underline hover:text-purple-600 transition-colors"
+                        className="text-md md:text-lg  group cursor-pointer"
                     >
                         VIEW ALL PRODUCTS
+                        <div className="bg-black h-[1px] w-0 group-hover:w-full transition-all duration-500"></div>
                     </button>
                 </div>
             </div>
@@ -129,17 +130,15 @@ const TopSeller = () => {
 
                         320: {
                             slidesPerView: 1,
-                            // Only center slides if there's more than one slide
-                            centeredSlides: 1,
+                            centeredSlides: false,
                         },
                         640: {
                             slidesPerView: 2,
-                            // Only center slides if there's more than two slides
-                            centeredSlides: 2,
+                            centeredSlides: false,
                         },
                         1024: {
                             slidesPerView: 3,
-                            centeredSlides: false, // Keep it simple for larger screens
+                            centeredSlides: false,
                         },
                         1440: {
                             slidesPerView: 4,
@@ -149,74 +148,76 @@ const TopSeller = () => {
                 >
                     {products.map((prd) => (
                         <SwiperSlide key={prd._id}>
-                            <div className="duration-300 ease-in-out hover:scale-95 group relative">
-                                {/* ❤️ Wishlist Button */}
-                                <IconButton
-                                    aria-label="add to wishlist"
-                                    variant="soft"
-                                    size="sm"
+                            <div className="flex justify-center">
+                                <div className="duration-300 ease-in-out hover:scale-95 group relative">
+                                    {/* Wishlist Button */}
+                                    <IconButton
+                                        aria-label="add to wishlist"
+                                        variant="soft"
+                                        size="sm"
 
-                                    sx={{
+                                        sx={{
 
-                                        backgroundColor: prd.isWishlisted ? '#ef4444' : 'white',
-                                        color: prd.isWishlisted ? 'white' : 'black',
-                                        opacity: 1,
-                                        transform: 'scale(1)',
-                                        position: 'absolute',
-                                        top: '0.75rem',
-                                        right: '0.75rem',
-                                        zIndex: 20,
-                                        borderRadius: '50%',
-                                        boxShadow: '0 2px 6px rgba(0,0,0,0.15)',
-                                        transition: 'all 0.3s ease',
-                                        '&:hover': {
-                                            backgroundColor: '#f87171',
-                                            color: 'white',
-                                            transform: 'scale(1.1)',
-                                            boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
-                                        },
-                                    }}
+                                            backgroundColor: prd.isWishlisted ? '#ef4444' : 'white',
+                                            color: prd.isWishlisted ? 'white' : 'black',
+                                            opacity: 1,
+                                            transform: 'scale(1)',
+                                            position: 'absolute',
+                                            top: '0.75rem',
+                                            right: '0.75rem',
+                                            zIndex: 20,
+                                            borderRadius: '50%',
+                                            boxShadow: '0 2px 6px rgba(0,0,0,0.15)',
+                                            transition: 'all 0.3s ease',
+                                            '&:hover': {
+                                                backgroundColor: '#f87171',
+                                                color: 'white',
+                                                transform: 'scale(1.1)',
+                                                boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
+                                            },
+                                        }}
 
-                                    onClick={(e) => {
-                                        e.stopPropagation();
-                                        if (user) {
-                                            handleWishlist(e, prd._id, user._id);
-                                        } else {
-                                            toast.error('Login to add items to wishlist');
-                                        }
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            if (user) {
+                                                handleWishlist(e, prd._id, user._id);
+                                            } else {
+                                                toast.error('Login to add items to wishlist');
+                                            }
 
-                                    }}
-                                >
-                                    <FavoriteBorderIcon />
-                                </IconButton>
-                                {/* Image */}
-                                <div className="mb-4 overflow-hidden relative">
-                                    <img
-                                        onClick={() => navigate(`/home/products-list/detail/${prd._id}`)}
-                                        className=" w-64 h-64 sm:w-72 sm:h-72 md:w-80 md:h-80 lg:w-96 lg:h-96 object-cover duration-300 ease-in-out group-hover:scale-110 cursor-pointer" src={prd.productImage}
-                                        alt={prd.name}
-                                    />
-                                </div>
-
-                                {/* Title */}
-                                <div
-                                    onClick={() => navigate(`/home/products-list/detail/${prd._id}`)}
-                                    className="text-xl mb-3">
-                                    {prd.name}
-                                </div>
-
-                                {/* Price + Add to Cart */}
-                                <div
-                                    className="text-lg overflow-hidden"
-                                    style={{ height: "25px" }}
-                                >
-                                    <div className="transition-all duration-500 group-hover:-translate-y-8">
-                                        <div>${prd.price}</div>
-                                        <div
+                                        }}
+                                    >
+                                        <FavoriteBorderIcon />
+                                    </IconButton>
+                                    {/* Image */}
+                                    <div className="mb-4 overflow-hidden relative">
+                                        <img
                                             onClick={() => navigate(`/home/products-list/detail/${prd._id}`)}
-                                            className="cursor-pointer"
-                                        >
-                                            Buy Now
+                                            className=" w-64 h-64 sm:w-72 sm:h-72 md:w-80 md:h-80 lg:w-96 lg:h-96 object-cover duration-300 ease-in-out group-hover:scale-110 cursor-pointer" src={prd.productImage}
+                                            alt={prd.name}
+                                        />
+                                    </div>
+
+                                    {/* Title */}
+                                    <div
+                                        onClick={() => navigate(`/home/products-list/detail/${prd._id}`)}
+                                        className="text-xl mb-3">
+                                        {prd.name}
+                                    </div>
+
+                                    {/* Price + Add to Cart */}
+                                    <div
+                                        className="text-lg overflow-hidden"
+                                        style={{ height: "25px" }}
+                                    >
+                                        <div className="transition-all duration-500 group-hover:-translate-y-8">
+                                            <div>${prd.price}</div>
+                                            <div
+                                                onClick={() => navigate(`/home/products-list/detail/${prd._id}`)}
+                                                className="cursor-pointer"
+                                            >
+                                                Buy Now
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

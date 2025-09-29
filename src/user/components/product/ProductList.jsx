@@ -165,7 +165,7 @@ const ProductList = () => {
         (
           <Loading />
         ) : (
-          <div className='h-[calc(100vh-5rem)]'>
+          <div className=''>
             <div className="px-6 pt-2">
               <input
                 type="text"
