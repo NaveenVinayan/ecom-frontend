@@ -19,6 +19,7 @@ const LatestArrivals = () => {
     const { user } = useAuth()
 
     useEffect(() => {
+
         const fetchProducts = async () => {
             setLoading(true)
             try {
@@ -45,22 +46,7 @@ const LatestArrivals = () => {
                         }
                     ));
 
-                    if (user) {
-                        const wishRes = await axios.get(
-                            `${import.meta.env.VITE_API_BASE_URL}/api/wishlist/${user._id}`,
-                            {
-                                headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-                            }
-                        );
-
-                        const wishIds = wishRes.data.products.map((w) => w.productId._id);
-
-                        data = data.map((prd) => ({
-                            ...prd,
-                            isWishlisted: wishIds.includes(prd._id),
-                        }));
-                    }
-
+                   
                     const limitedProducts = data
                         .sort((a, b) => new Date(b.date) - new Date(a.date))
                         .slice(0, 7)
@@ -79,7 +65,35 @@ const LatestArrivals = () => {
             }
         }
         fetchProducts()
-    }, [user])
+    }, [])
+
+    useEffect(() => {
+    const fetchWishlist = async () => {
+      if (!user) return;
+      try {
+
+        const wishRes = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/wishlist/${user._id}`, {
+          headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
+        });
+        const wishIds = wishRes.data.products.map((w) => w.productId._id);
+
+        setProducts((prev) =>
+          prev.map((prd) => ({
+            ...prd,
+            isWishlisted: wishIds.includes(prd._id),
+          }))
+        );
+
+        
+
+      } catch (error) {
+        if (error.response && !error.response.data.success) {
+          alert(error.response.data.error)
+        }
+      }
+    }
+    fetchWishlist()
+  }, [user])
 
     const handleWishlist = async (e, id, userId) => {
         e.preventDefault()
@@ -134,113 +148,118 @@ const LatestArrivals = () => {
                 </div>
             </div>
 
-            <div className="w-full">
+            <div>
                 {/* Swiper */}
-                <Swiper
-                    modules={[Navigation]}
-                    navigation
-                    spaceBetween={30}
-                    breakpoints={{
-                        320: {
-                            slidesPerView: 1,
-                            centeredSlides: false,
-                        },
-                        640: {
-                            slidesPerView: 2,
-                            centeredSlides: false,
-                        },
-                        1024: {
-                            slidesPerView: 3,
-                            centeredSlides: false,
-                        },
-                        1440: {
-                            slidesPerView: 4,
-                            centeredSlides: false,
-                        },
-                    }}
-                    className="mySwiper "
-                >
-                    {products.map((prd) => (
-                        <SwiperSlide key={prd._id} >
-                            <div className="flex justify-center">
-                                <div>
-                                    <div className="relative overflow-hidden duration-300 ease-in-out hover:scale-95 group w-fit">
-                                        {/* Wishlist Button */}
-                                        <IconButton
-                                            aria-label="add to wishlist"
-                                            variant="soft"
-                                            size="sm"
+                {loading ? (
+                    <div className="text-center py-10">Loading...</div>
+                ) : (
+                    <Swiper
+                        modules={[Navigation]}
+                        navigation
+                        spaceBetween={30}
+                        breakpoints={{
+                            320: {
+                                slidesPerView: 1,
+                                centeredSlides: false,
+                            },
+                            640: {
+                                slidesPerView: 2,
+                                centeredSlides: false,
+                            },
+                            1024: {
+                                slidesPerView: 3,
+                                centeredSlides: false,
+                            },
+                            1440: {
+                                slidesPerView: 4,
+                                centeredSlides: false,
+                            },
+                        }}
+                        className="mySwiper "
+                    >
+                        {products.map((prd) => (
+                            <SwiperSlide key={prd._id} >
+                                <div className="flex justify-center">
+                                    <div>
+                                        <div className="relative overflow-hidden duration-300 ease-in-out hover:scale-95 group w-fit">
+                                            {/* Wishlist Button */}
+                                            <IconButton
+                                                aria-label="add to wishlist"
+                                                variant="soft"
+                                                size="sm"
 
-                                            sx={{
+                                                sx={{
 
-                                                backgroundColor: prd.isWishlisted ? '#ef4444' : 'white',
-                                                color: prd.isWishlisted ? 'white' : 'black',
-                                                opacity: 1,
-                                                transform: 'scale(1)',
-                                                position: 'absolute',
-                                                top: '0.75rem',
-                                                right: '0.75rem',
-                                                zIndex: 20,
-                                                borderRadius: '50%',
-                                                boxShadow: '0 2px 6px rgba(0,0,0,0.15)',
-                                                transition: 'all 0.3s ease',
-                                                '&:hover': {
-                                                    backgroundColor: '#f87171',
-                                                    color: 'white',
-                                                    transform: 'scale(1.1)',
-                                                    boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
-                                                },
-                                            }}
+                                                    backgroundColor: prd.isWishlisted ? '#ef4444' : 'white',
+                                                    color: prd.isWishlisted ? 'white' : 'black',
+                                                    opacity: 1,
+                                                    transform: 'scale(1)',
+                                                    position: 'absolute',
+                                                    top: '0.75rem',
+                                                    right: '0.75rem',
+                                                    zIndex: 20,
+                                                    borderRadius: '50%',
+                                                    boxShadow: '0 2px 6px rgba(0,0,0,0.15)',
+                                                    transition: 'all 0.3s ease',
+                                                    '&:hover': {
+                                                        backgroundColor: '#f87171',
+                                                        color: 'white',
+                                                        transform: 'scale(1.1)',
+                                                        boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
+                                                    },
+                                                }}
 
-                                            onClick={(e) => {
-                                                e.stopPropagation();
-                                                if (user) {
-                                                    handleWishlist(e, prd._id, user._id);
-                                                } else {
-                                                    toast.error('Login to add items to wishlist');
-                                                }
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    if (user) {
+                                                        handleWishlist(e, prd._id, user._id);
+                                                    } else {
+                                                        toast.error('Login to add items to wishlist');
+                                                    }
 
-                                            }}
-                                        >
-                                            <FavoriteBorderIcon />
-                                        </IconButton>
-                                        <img
-                                            onClick={() => navigate(`/home/products-list/detail/${prd._id}`)}
-                                            className="w-64 h-64 sm:w-72 sm:h-72 md:w-80 md:h-80 lg:w-96 lg:h-96 object-cover duration-300 ease-in-out group-hover:scale-110 cursor-pointer" src={prd.productImage}
-                                            alt={prd.name}
-                                        />
-                                    </div>
-
-
-                                    <div className="py-4">
-                                        <div className="flex">
-                                            <div
-                                                onClick={() => navigate(`/home/products-list/detail/${prd._id}`)}
-                                                className="font-semi-bold text-xl mb-2 group uppercase cursor-pointer"
-
+                                                }}
                                             >
-                                                {prd.name}
-                                                <div className="bg-black h-[1px] w-0 group-hover:w-full transition-all duration-500"></div>
-                                            </div>
+                                                <FavoriteBorderIcon />
+                                            </IconButton>
+                                            <img
+                                                onClick={() => navigate(`/home/products-list/detail/${prd._id}`)}
+                                                className="w-64 h-64 sm:w-72 sm:h-72 md:w-80 md:h-80 lg:w-96 lg:h-96 object-cover duration-300 ease-in-out group-hover:scale-110 cursor-pointer" src={prd.productImage}
+                                                alt={prd.name}
+                                            />
                                         </div>
-                                        <p className="text-gray-700 text-base pb-4">{prd.description}</p>
-                                        <div className="flex">
-                                            <div className="group font-normal text-lg mb-2 cursor-pointer"
-                                                onClick={() => navigate(`/home/products-list/detail/${prd._id}`)}
-                                            >
-                                                DISCOVER
-                                                <div className="bg-gray-900 h-[1px] w-full"></div>
-                                                <div className="bg-gray-950 h-[.5px] w-0 group-hover:w-full transition-all duration-500"></div>
+
+
+                                        <div className="py-4">
+                                            <div className="flex">
+                                                <div
+                                                    onClick={() => navigate(`/home/products-list/detail/${prd._id}`)}
+                                                    className="font-semi-bold text-xl mb-2 group uppercase cursor-pointer"
+
+                                                >
+                                                    {prd.name}
+                                                    <div className="bg-black h-[1px] w-0 group-hover:w-full transition-all duration-500"></div>
+                                                </div>
+                                            </div>
+                                            <p className="text-gray-700 text-base pb-4">{prd.description}</p>
+                                            <div className="flex">
+                                                <div className="group font-normal text-lg mb-2 cursor-pointer"
+                                                    onClick={() => navigate(`/home/products-list/detail/${prd._id}`)}
+                                                >
+                                                    DISCOVER
+                                                    <div className="bg-gray-900 h-[1px] w-full"></div>
+                                                    <div className="bg-gray-950 h-[.5px] w-0 group-hover:w-full transition-all duration-500"></div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </SwiperSlide>
-                    ))}
-                </Swiper>
+                            </SwiperSlide>
+                        ))}
+                    </Swiper>
+                )}
             </div>
-        </header>
+
+        </header >
     );
 };
 

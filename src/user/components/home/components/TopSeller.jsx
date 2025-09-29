@@ -64,7 +64,34 @@ const TopSeller = () => {
 
 
         fetchProducts();
-    }, [user]);
+    }, []);
+
+    useEffect(() => {
+        const fetchWishlist = async () => {
+            if (!user) return;
+            try {
+
+                const wishRes = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/wishlist/${user._id}`, {
+                    headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
+                });
+                const wishIds = wishRes.data.products.map((w) => w.productId._id);
+
+                setProducts((prev) =>
+                    prev.map((prd) => ({
+                        ...prd,
+                        isWishlisted: wishIds.includes(prd._id),
+                    }))
+                );
+
+
+            } catch (error) {
+                if (error.response && !error.response.data.success) {
+                    alert(error.response.data.error)
+                }
+            }
+        }
+        fetchWishlist()
+    }, [user])
 
     const handleWishlist = async (e, id, userId) => {
         e.preventDefault()
