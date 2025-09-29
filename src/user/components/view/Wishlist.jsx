@@ -7,6 +7,7 @@ import { useAuth } from "../../../context/authContext";
 import Loading from "../../../utils/Loading";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Wishlist = () => {
     const [products, setProducts] = useState([])
@@ -14,82 +15,81 @@ const Wishlist = () => {
     const { user } = useAuth()
     const navigate = useNavigate()
 
+    const fetchWishProducts = async () => {
+        if (!user) return;
+        setLoading(true)
+        try {
+
+            const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/wishlist/${user._id}`,
+                {
+                    headers: {
+                        "Authorization": `Bearer ${localStorage.getItem('token')}`
+                    }
+                }
+            )
+
+            if (response.data.success) {
+                const data = response.data.products.map((prd) => (
+                    {
+                        _id: prd.productId._id,
+                        name: prd.productId.name,
+                        productImage: `${import.meta.env.VITE_API_BASE_URL}/uploads/${prd.productId.productImage}`,
+                        description: prd.productId.description,
+                        price: prd.productId.price
+
+                    }
+                ));
+
+                setProducts(data)
+
+            }
+
+
+        } catch (error) {
+            if (error.response && !error.response.data.success) {
+                alert(error.response.data.error)
+            }
+        } finally {
+            setLoading(false);
+        }
+    }
 
 
 
     useEffect(() => {
-        const fetchWishProducts = async () => {
-            setLoading(true)
-
-            try {
-
-                const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/wishlist/${user._id}`,
-                    {
-                        headers: {
-                            "Authorization": `Bearer ${localStorage.getItem('token')}`
-                        }
-                    }
-                )
-
-                if (response.data.success) {
-                    const data = response.data.products.map((prd) => (
-                        {
-                            _id: prd.productId._id,
-                            name: prd.productId.name,
-                            productImage: `${import.meta.env.VITE_API_BASE_URL}/uploads/${prd.productId.productImage}`,
-                            description: prd.productId.description,
-                            price: prd.productId.price
-
-                        }
-                    ));
-
-                    setProducts(data)
-
-                }
-
-
-            } catch (error) {
-                if (error.response && !error.response.data.success) {
-                    alert(error.response.data.error)
-                }
-            } finally {
-                setLoading(false);
-            }
-        }
 
         fetchWishProducts()
-    }, [])
+    }, [user])
 
     const handleWishlist = async (e, id, userId) => {
         e.preventDefault()
-        if (user) {
-            try {
-                const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/wishlist/${id}/${userId}`, {},
-                    {
-                        headers: {
-                            "Authorization": `Bearer ${localStorage.getItem('token')}`
-                        }
-                    }
-                )
 
-                if (response.data.success) {
-                    if (response.data.message.toLowerCase().includes("removed")) {
-                        toast.info(response.data.message);
-                    } else {
-                        toast.success(response.data.message);
+        try {
+            const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/wishlist/${id}/${userId}`, {},
+                {
+                    headers: {
+                        "Authorization": `Bearer ${localStorage.getItem('token')}`
                     }
                 }
+            )
 
-
-            } catch (error) {
-                if (error.response && !error.response.data.success) {
-                    alert(error.response.data.error)
+            if (response.data.success) {
+                if (response.data.message.toLowerCase().includes("removed")) {
+                    toast.info(response.data.message);
+                } else {
+                    toast.success(response.data.message);
                 }
+                await fetchWishProducts()
             }
-            fetchWishProducts()
-        } else {
-            navigate('/login')
+
+
+        } catch (error) {
+            if (error.response && !error.response.data.success) {
+                alert(error.response.data.error)
+            }
         }
+
+
 
     }
 
