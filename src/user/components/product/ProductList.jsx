@@ -78,11 +78,6 @@ const ProductList = () => {
     fetchProducts()
   }, [user])
 
-  console.log(products);
-
-
-
-
 
   const handleFilter = (e) => {
     const records = products.filter((prd) => (
@@ -151,6 +146,7 @@ const ProductList = () => {
             <div className="px-6 pt-2">
               <input
                 type="text"
+                id='search'
                 placeholder="Search by product name"
                 onChange={handleFilter}
                 className="w-full max-w-sm px-4 py-2 border border-gray-300 rounded-lg shadow-sm 
