@@ -87,7 +87,7 @@ const OrderDetail = () => {
                             <h3 className="text-lg font-semibold mb-3">🛍 Product Details</h3>
                             <div className="flex items-center gap-4">
                                 <img
-                                    src={`${import.meta.env.VITE_API_BASE_URL}/uploads/${order?.productId?.productImage}`}
+                                    src={`${order?.productId?.productImage}`}
                                     alt={order?.productId?.name}
                                     className="w-24 h-24 object-cover rounded-md border"
                                 />

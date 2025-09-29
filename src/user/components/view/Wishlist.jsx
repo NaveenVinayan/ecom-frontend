@@ -33,7 +33,7 @@ const Wishlist = () => {
                     {
                         _id: prd.productId._id,
                         name: prd.productId.name,
-                        productImage: `${import.meta.env.VITE_API_BASE_URL}/uploads/${prd.productId.productImage}`,
+                        productImage: `${prd.productId.productImage}`,
                         description: prd.productId.description,
                         price: prd.productId.price
 

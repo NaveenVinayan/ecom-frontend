@@ -142,7 +142,7 @@ const ProductDetail = () => {
             </div>
 
             <img
-              src={`${import.meta.env.VITE_API_BASE_URL}/uploads/${product.productImage}`}
+              src={`${product.productImage}`}
               alt={product.name}
               className=" shadow-lg w-full max-w-md object-cover"
             />

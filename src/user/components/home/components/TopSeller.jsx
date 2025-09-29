@@ -39,7 +39,7 @@ const TopSeller = () => {
                     const data = response.data.products.map((prd) => ({
                         _id: prd._id,
                         name: prd.name,
-                        productImage: `${import.meta.env.VITE_API_BASE_URL}/uploads/${prd.productImage}`,
+                        productImage: `${prd.productImage}`,
                         description: prd.description,
                         price: prd.price,
                         date: prd.createdAt,
@@ -220,7 +220,8 @@ const TopSeller = () => {
                                     <div className="mb-4 overflow-hidden relative">
                                         <img
                                             onClick={() => navigate(`/home/products-list/detail/${prd._id}`)}
-                                            className=" w-64 h-64 sm:w-72 sm:h-72 md:w-80 md:h-80 lg:w-96 lg:h-96 object-cover duration-300 ease-in-out group-hover:scale-110 cursor-pointer" src={prd.productImage}
+                                            className=" w-64 h-64 sm:w-72 sm:h-72 md:w-80 md:h-80 lg:w-96 lg:h-96 object-cover duration-300 ease-in-out group-hover:scale-110 cursor-pointer" 
+                                            src={prd.productImage}
                                             alt={prd.name}
                                         />
                                     </div>
