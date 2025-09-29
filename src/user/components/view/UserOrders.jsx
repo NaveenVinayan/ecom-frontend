@@ -46,7 +46,7 @@ const Userorders = () => {
             _id: ord._id,
             productId: ord.productId?._id,
             productName: ord.productId?.fullName,
-            productImage: `${import.meta.env.VITE_API_BASE_URL}/${ord.productId?.productImage}`,
+            productImage: `${import.meta.env.VITE_API_BASE_URL}/uploads/${ord.productId?.productImage}`,
             description: ord.productId?.description,
             price: ord.productId?.price,
             status: ord.status,

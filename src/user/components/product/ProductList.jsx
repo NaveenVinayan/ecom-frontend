@@ -41,7 +41,7 @@ const ProductList = () => {
           {
             _id: prd._id,
             name: prd.name,
-            productImage: `${import.meta.env.VITE_API_BASE_URL}/${prd.productImage}`,
+            productImage: `${import.meta.env.VITE_API_BASE_URL}/uploads/${prd.productImage}`,
             description: prd.description,
             price: prd.price,
             isWishlisted: false,
