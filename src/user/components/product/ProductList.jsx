@@ -49,18 +49,7 @@ const ProductList = () => {
           }
         ));
 
-        if (user) {
-          const wishRes = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/wishlist/${user._id}`, {
-            headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
-          });
-          const wishIds = wishRes.data.products.map((w) => w.productId._id);
 
-          // Mark wishlist items
-          data = data.map((prd) => ({
-            ...prd,
-            isWishlisted: wishIds.includes(prd._id),
-          }));
-        }
 
         setProducts(data)
         setFilteredProduct(data)
@@ -76,6 +65,40 @@ const ProductList = () => {
     }
 
     fetchProducts()
+  }, [])
+
+  useEffect(() => {
+    const fetchWishlist = async () => {
+      if (!user) return;
+      try {
+
+        const wishRes = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/wishlist/${user._id}`, {
+          headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
+        });
+        const wishIds = wishRes.data.products.map((w) => w.productId._id);
+
+        setProducts((prev) =>
+          prev.map((prd) => ({
+            ...prd,
+            isWishlisted: wishIds.includes(prd._id),
+          }))
+        );
+
+        setFilteredProduct((prev) =>
+          prev.map((prd) => ({
+            ...prd,
+            isWishlisted: wishIds.includes(prd._id),
+          }))
+        );
+
+
+      } catch (error) {
+        if (error.response && !error.response.data.success) {
+          alert(error.response.data.error)
+        }
+      }
+    }
+    fetchWishlist()
   }, [user])
 
 
