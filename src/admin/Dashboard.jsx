@@ -38,7 +38,8 @@ const Dashboard = () => {
     
    <div>
      <div className='flex gap-4 flex-wrap'  >
-      <div className='rounded flex bg-teal-600'>
+
+      <div className='rounded flex bg-teal-600 w-40'>
         <div className={` text-3xl flex justify-center items-center text-white px-4`}>
           <ProductionQuantityLimitsIcon />
         </div>
@@ -47,7 +48,8 @@ const Dashboard = () => {
           <p className='text-xl font-bold'>{stats.productsCount}</p>
         </div>
       </div>
-      <div className='rounded flex bg-yellow-600'>
+
+      <div className='rounded flex bg-yellow-600 w-40'>
         <div className={` text-3xl flex justify-center items-center text-white px-4`}>
           <PriceCheckIcon />
         </div>
@@ -56,7 +58,8 @@ const Dashboard = () => {
           <p className='text-xl font-bold'>{stats.ordersCount}</p>
         </div>
       </div>
-      <div className='rounded flex bg-red-600'>
+      
+      <div className='rounded flex bg-red-600 w-40'>
         <div className={` text-3xl flex justify-center items-center text-white px-4`}>
           <GroupIcon />
         </div>

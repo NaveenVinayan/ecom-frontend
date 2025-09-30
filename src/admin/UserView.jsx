@@ -101,7 +101,7 @@ const UserView = () => {
                       <td className="border border-gray-300 px-4 py-2">{usr.email}</td>
                       <td className="border border-gray-300 px-4 py-2">{usr.role}</td>
 
-                      <td className="border border-gray-300 px-4 py-2 text-center space-x-2">
+                      <td className="border border-gray-300 flex justify-center  py-2 text-center space-x-2">
                         <button
                           onClick={() => navigate(`/admin-dashboard/edit-user/${usr._id}`)}
                           className="px-4 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600"

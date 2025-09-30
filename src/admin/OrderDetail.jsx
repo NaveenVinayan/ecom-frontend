@@ -69,11 +69,11 @@ const OrderDetail = () => {
                     <Loading />
                 ) : (
                     <div className="max-w-4xl mx-auto p-6">
-                        <h2 className="text-2xl font-bold mb-6 text-gray-800">📦 Order Details</h2>
+                        <h2 className="text-2xl font-bold mb-6 text-gray-800"> Order Details</h2>
 
                         {/* Shipping Address */}
                         <div className="bg-white shadow rounded-lg p-6 mb-6">
-                            <h3 className="text-lg font-semibold mb-3">🚚 Shipping Address</h3>
+                            <h3 className="text-lg font-semibold mb-3"> Shipping Address</h3>
                             <p><span className="font-medium">Full Name:</span> {order.fullName}</p>
                             <p><span className="font-medium">Phone:</span> {order.phone}</p>
                             <p>
@@ -84,7 +84,7 @@ const OrderDetail = () => {
 
                         {/* Product Details */}
                         <div className="bg-white shadow rounded-lg p-6 mb-6">
-                            <h3 className="text-lg font-semibold mb-3">🛍 Product Details</h3>
+                            <h3 className="text-lg font-semibold mb-3"> Product Details</h3>
                             <div className="flex items-center gap-4">
                                 <img
                                     src={`${order?.productId?.productImage}`}
@@ -103,7 +103,7 @@ const OrderDetail = () => {
 
                         {/* User Details */}
                         <div className="bg-white shadow rounded-lg p-6 mb-6">
-                            <h3 className="text-lg font-semibold mb-3">👤 User Details</h3>
+                            <h3 className="text-lg font-semibold mb-3"> User Details</h3>
                             <p><span className="font-medium">Name:</span> {order.userId.name}</p>
                             <p><span className="font-medium">Email:</span> {order.userId.email}</p>
                         </div>

@@ -82,7 +82,7 @@ const ProductView = () => {
                 (
                     <Loading />
                 ) : (
-                    <div className="p-8 bg-gray-50 min-h-screen">
+                    <div className=" bg-gray-50 min-h-screen">
                         <div className="bg-white shadow-lg rounded-lg overflow-hidden" >
                             <div className="flex justify-between px-6 py-4 border-b bg-gray-100">
                                 <h2 className="text-2xl font-bold ">
