@@ -14,6 +14,7 @@ const Wishlist = () => {
     const [loading, setLoading] = useState(false)
     const { user } = useAuth()
     const navigate = useNavigate()
+    
 
     const fetchWishProducts = async () => {
         if (!user) return;
@@ -63,7 +64,6 @@ const Wishlist = () => {
 
     const handleWishlist = async (e, id, userId) => {
         e.preventDefault()
-
         try {
             const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/wishlist/${id}/${userId}`, {},
                 {
@@ -88,8 +88,6 @@ const Wishlist = () => {
                 alert(error.response.data.error)
             }
         }
-
-
 
     }
 
