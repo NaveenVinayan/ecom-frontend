@@ -46,7 +46,7 @@ const Login = () => {
                     <Loading />
                 ) : (
                     <div className='h-screen  '>
-                        <div className=' bg-slate-950  h-screen flex flex-col justify-center gap-10'>
+                        <div className=' bg-slate-950  h-screen flex flex-col justify-center gap-8 '>
                             <div className='flex justify-center'>
                                 <form className="max-w-sm grow" onSubmit={handleSubmit}>
                                     <div className='grid gap-5  px-12 pt-16 pb-8 bg-slate-900 rounded-3xl shadow-gray-900 shadow-2xl'>
@@ -93,13 +93,25 @@ const Login = () => {
                                 </form>
                             </div>
                             <div className='flex justify-center'>
-                                <button 
-                                type="button" 
-                                onClick={()=> navigate('/')}
-                                className="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-900 shadow-2xs hover:bg-gray-100">
+                                <button
+                                    type="button"
+                                    onClick={() => navigate('/')}
+                                    className="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-900 shadow-2xs hover:bg-gray-100">
                                     <span>Go To Home Page</span>
-                                    <IoMdHome className='text-lg' /> 
+                                    <IoMdHome className='text-lg' />
                                 </button>
+                            </div>
+                            <div className='flex gap-3 justify-center'>
+                                <div className=' py-3 px-4 gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-900 shadow-2xs hover:bg-gray-100'>
+                                    <div className='text-xl'>User Credentials</div>
+                                    <div>Username : user@gmail.com</div>
+                                    <div>Password : user</div>
+                                </div>
+                                <div className=' py-3 px-4 gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-900 shadow-2xs hover:bg-gray-100'>
+                                    <div className='text-xl'>Admin Credentials</div>
+                                    <div>Username : admin@gmail.com</div>
+                                    <div>Password : admin</div>
+                                </div>
                             </div>
                         </div>
                     </div>
